@@ -2,20 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #070408;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.button_std {
+  @apply inline-block py-1.5 px-2.5 bg-gray-200 hover:bg-gray-400 font-normal;
+}
+
+.table_std th {
+  @apply py-2.5;
+}
+
+.table_std td, .table_std th {
+  @apply px-5;
+}
+
+.table_std tr:nth-child(odd) td {
+  @apply bg-gray-100
 }
