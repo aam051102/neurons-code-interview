@@ -48,10 +48,10 @@ export default function Survivors() {
                                 <td>{survivor.age}</td>
                                 <td>{survivor.gender === 0 ? "M" : "F"}</td>
                                 <td>
-                                    {(survivor.longitude, survivor.lattitude)}
+                                    {survivor.longitude}, {survivor.lattitude}
                                 </td>
                                 <td>
-                                    {survivor.infectionReports > 3
+                                    {survivor.infectionReports >= 3
                                         ? "INFECTED"
                                         : "OK"}
                                 </td>

@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const itemTypeNameMap = {
     water: "Water",
     ammo: "Ammunition",
@@ -6,24 +10,43 @@ const itemTypeNameMap = {
 } as const;
 
 export default function Survivor() {
-    const survivor = {
-        id: 0,
-        name: "John Smith",
-        age: 12,
-        gender: 0,
-        lastLocation: ["0.462460", "1.464640"],
-        infectionReports: 0,
-        inventory: [
-            {
-                type: "water",
-                count: 3,
-            },
-            {
-                type: "ammo",
-                count: 7,
-            },
-        ],
-    } as const;
+    const [survivor, setSurvivor] = useState<
+        | {
+              id: number;
+              name: string;
+              age: number;
+              gender: number;
+              longitude: string;
+              lattitude: string;
+              infectionReports: 0;
+              inventory: [
+                  {
+                      type: "water";
+                      count: 3;
+                  },
+                  {
+                      type: "ammo";
+                      count: 7;
+                  }
+              ];
+          }
+        | undefined
+    >(undefined);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/survivors/find?format=json`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSurvivor(res);
+            });
+    }, []);
+
+    if (!survivor)
+        return (
+            <div>
+                <p>Loading</p>
+            </div>
+        );
 
     return (
         <>
@@ -52,7 +75,7 @@ export default function Survivor() {
                 </p>
                 <p>
                     <span className="font-bold">Last Location:</span>{" "}
-                    {survivor.lastLocation.join(", ")}
+                    {survivor.lattitude}, {survivor.longitude}
                 </p>
                 <p>
                     <span className="font-bold">Status:</span>{" "}

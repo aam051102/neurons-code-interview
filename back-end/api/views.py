@@ -15,3 +15,9 @@ def createSurvivor(request):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['GET'])
+def findSurvivor(request):
+    item = Survivor.objects.get(id=request.data.id)
+    serializer = SurvivorSerializer(item)
+    return Response(serializer.data)
