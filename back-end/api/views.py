@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from base.models import Survivor
 from .serializers import SurvivorSerializer
+from django.http import HttpResponse
 
 @api_view(['GET'])
 def listSurvivors(request):
@@ -14,10 +15,13 @@ def createSurvivor(request):
     serializer = SurvivorSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        # TODO: Preferably return some proper validation errors here.
+        return HttpResponse(status=500)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def findSurvivor(request):
-    item = Survivor.objects.get(id=request.data.id)
+    item = Survivor.objects.get(id=int(request.GET.get("id", 0)))
     serializer = SurvivorSerializer(item)
     return Response(serializer.data)

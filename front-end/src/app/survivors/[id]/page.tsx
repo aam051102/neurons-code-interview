@@ -1,45 +1,35 @@
 "use client";
 
+import ReportModal from "@/components/ReportModal";
+import { ISurvivor } from "@/types/ISurvivor";
+import { userID } from "@/userData";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const itemTypeNameMap = {
+/*const itemTypeNameMap = {
     water: "Water",
     ammo: "Ammunition",
     food: "Food",
     med: "Medication",
-} as const;
+} as const;*/
 
 export default function Survivor() {
-    const [survivor, setSurvivor] = useState<
-        | {
-              id: number;
-              name: string;
-              age: number;
-              gender: number;
-              longitude: string;
-              lattitude: string;
-              infectionReports: 0;
-              inventory: [
-                  {
-                      type: "water";
-                      count: 3;
-                  },
-                  {
-                      type: "ammo";
-                      count: 7;
-                  }
-              ];
-          }
-        | undefined
-    >(undefined);
+    const [survivor, setSurvivor] = useState<ISurvivor | undefined>(undefined);
+
+    const params = useParams<{ id: string }>();
+    const id = params.id ? Number(params.id) : null;
+
+    const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch(`http://localhost:8000/survivors/find?format=json`)
+        if (!id) return;
+
+        fetch(`http://localhost:8000/survivors/find?format=json&id=${id}`)
             .then((res) => res.json())
             .then((res) => {
                 setSurvivor(res);
             });
-    }, []);
+    }, [id]);
 
     if (!survivor)
         return (
@@ -51,19 +41,31 @@ export default function Survivor() {
     return (
         <>
             <div className="min-h-screen p-20 container mx-auto">
-                <div className="flex gap-5 items-center mb-2.5 mt-5">
+                <div className="flex gap-x-5 gap-y-2.5 flex-wrap items-center mb-2.5 mt-5">
                     <h1 className="text-3xl font-black uppercase">
                         {survivor.name}
                     </h1>
 
-                    <div className="flex gap-2.5">
-                        <button type="button" className="button_std">
-                            Report infection
-                        </button>
-                        <button type="button" className="button_std">
-                            Trade
-                        </button>
-                    </div>
+                    {userID === survivor.id ? (
+                        <p className="text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200">
+                            You
+                        </p>
+                    ) : (
+                        <div className="flex gap-2.5">
+                            <button
+                                type="button"
+                                className="button_std button_std_danger"
+                                onClick={() => {
+                                    setIsReportModalOpen(true);
+                                }}
+                            >
+                                Report infection
+                            </button>
+                            <button type="button" className="button_std">
+                                Trade
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <p>
@@ -75,7 +77,7 @@ export default function Survivor() {
                 </p>
                 <p>
                     <span className="font-bold">Last Location:</span>{" "}
-                    {survivor.lattitude}, {survivor.longitude}
+                    {survivor.latitude}, {survivor.longitude}
                 </p>
                 <p>
                     <span className="font-bold">Status:</span>{" "}
@@ -86,7 +88,7 @@ export default function Survivor() {
                     Inventory
                 </h2>
 
-                {survivor.inventory.map((item) => (
+                {/*survivor.inventory.map((item) => (
                     <div key={item.type}>
                         <p>
                             <span className="font-bold">
@@ -95,8 +97,14 @@ export default function Survivor() {
                             {item.count}
                         </p>
                     </div>
-                ))}
+                ))*/}
             </div>
+
+            <ReportModal
+                isOpen={isReportModalOpen}
+                setIsOpen={setIsReportModalOpen}
+                survivor={survivor}
+            />
         </>
     );
 }

@@ -11,8 +11,20 @@ body {
   @apply inline-block py-1.5 px-2.5 bg-gray-200 hover:bg-gray-400 font-normal;
 }
 
+.button_std_danger {
+  @apply bg-transparent border-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white;
+}
+
+.table_wrapper {
+  @apply overflow-auto max-h-screen;
+}
+
+.table_std {
+  @apply w-full border-spacing-0;
+}
+
 .table_std th {
-  @apply py-2.5;
+  @apply py-2.5 sticky top-0;
 }
 
 .table_std td, .table_std th {
@@ -21,4 +33,17 @@ body {
 
 .table_std tr:nth-child(odd) td {
   @apply bg-gray-100
+}
+
+.td_width-auto {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  max-width: 200px;
+}
+
+.td_width-hug {
+  white-space: nowrap;
+  width: 0;
 }
