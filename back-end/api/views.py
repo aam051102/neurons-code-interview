@@ -4,7 +4,7 @@ from base.models import Survivor
 from .serializers import SurvivorSerializer
 
 @api_view(['GET'])
-def findSurvivor(request):
+def listSurvivors(request):
     items = Survivor.objects.all()
     serializer = SurvivorSerializer(items, many=True)
     return Response(serializer.data)

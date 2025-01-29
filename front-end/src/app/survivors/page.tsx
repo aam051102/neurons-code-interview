@@ -1,16 +1,27 @@
+"use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Survivors() {
-    const survivors = [
+    const [survivors, setSurvivors] = useState<
         {
-            id: 0,
-            name: "John Smith",
-            age: 12,
-            gender: 0,
-            lastLocation: ["0.462460", "1.464640"],
-            infectionReports: 0,
-        },
-    ];
+            id: number;
+            name: string;
+            age: number;
+            gender: number;
+            longitude: string;
+            lattitude: string;
+            infectionReports: number;
+        }[]
+    >([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/survivors/list?format=json`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSurvivors(res);
+            });
+    }, []);
 
     return (
         <>
@@ -36,7 +47,9 @@ export default function Survivors() {
                                 <td>{survivor.name}</td>
                                 <td>{survivor.age}</td>
                                 <td>{survivor.gender === 0 ? "M" : "F"}</td>
-                                <td>{survivor.lastLocation.join(", ")}</td>
+                                <td>
+                                    {(survivor.longitude, survivor.lattitude)}
+                                </td>
                                 <td>
                                     {survivor.infectionReports > 3
                                         ? "INFECTED"
