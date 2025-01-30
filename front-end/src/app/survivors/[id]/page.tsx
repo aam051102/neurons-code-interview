@@ -1,6 +1,7 @@
 "use client";
 
 import ReportModal from "@/components/ReportModal";
+import TradeModal from "@/components/TradeModal";
 import { ISurvivor } from "@/types/ISurvivor";
 import { userID } from "@/userData";
 import { useParams } from "next/navigation";
@@ -20,6 +21,7 @@ export default function Survivor() {
     const id = params.id ? Number(params.id) : null;
 
     const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
+    const [isTradeModalOpen, setIsTradeModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
         if (!id) return;
@@ -40,16 +42,16 @@ export default function Survivor() {
 
     return (
         <>
-            <div className="min-h-screen p-20 container mx-auto">
+            <div className="min-h-screen py-20 custom_container">
                 <div className="flex gap-x-5 gap-y-2.5 flex-wrap items-center mb-2.5 mt-5">
                     <h1 className="text-3xl font-black uppercase">
                         {survivor.name}
                     </h1>
 
                     {userID === survivor.id ? (
-                        <p className="text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200">
+                        <div className="text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200 text-gray-700">
                             You
-                        </p>
+                        </div>
                     ) : (
                         <div className="flex gap-2.5">
                             <button
@@ -61,7 +63,13 @@ export default function Survivor() {
                             >
                                 Report infection
                             </button>
-                            <button type="button" className="button_std">
+                            <button
+                                type="button"
+                                className="button_std"
+                                onClick={() => {
+                                    setIsTradeModalOpen(true);
+                                }}
+                            >
                                 Trade
                             </button>
                         </div>
@@ -103,6 +111,12 @@ export default function Survivor() {
             <ReportModal
                 isOpen={isReportModalOpen}
                 setIsOpen={setIsReportModalOpen}
+                survivor={survivor}
+            />
+
+            <TradeModal
+                isOpen={isTradeModalOpen}
+                setIsOpen={setIsTradeModalOpen}
                 survivor={survivor}
             />
         </>

@@ -7,6 +7,10 @@
 - latitude: string
 - longitude: string
 
+### Infection Report
+- reported: number (Survivor ID)
+- reporter: number (Survivor ID)
+
 # Endpoints
 ## Survivors
 ### Find one: `/survivors/find`
@@ -29,3 +33,9 @@ List all survivors.
 
 #### Returns
 Array of survivor objects.
+
+### Create: `/survivors/report`
+Report an infection for a survivor.
+
+#### Params (body)
+Infection Report object
