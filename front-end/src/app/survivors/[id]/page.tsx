@@ -3,12 +3,15 @@
 import ReportModal from "@/components/ReportModal";
 import TradeModal from "@/components/TradeModal";
 import { ITEM_DATA_MAP, MAX_REPORTS_FOR_INFECTION } from "@/constants";
+import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import { userID } from "@/userData";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 export default function Survivor() {
+    const currentUserCtx = useContext(CurrentUserContext);
+    const currentUser = currentUserCtx?.currentUser;
+
     const [survivor, setSurvivor] = useState<ISurvivor | undefined>(undefined);
 
     const params = useParams<{ id: string }>();
@@ -46,7 +49,7 @@ export default function Survivor() {
                         {survivor.name}
                     </h1>
 
-                    {userID === survivor.id ? (
+                    {currentUser?.id === survivor.id ? (
                         <div className="text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200 text-gray-700">
                             You
                         </div>

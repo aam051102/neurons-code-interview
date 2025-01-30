@@ -1,6 +1,6 @@
+import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import { userID } from "@/userData";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const ReportModal = ({
     survivor,
@@ -13,6 +13,9 @@ const ReportModal = ({
     setIsOpen: (isOpen: boolean) => void;
     refetch: () => Promise<void>;
 }) => {
+    const currentUserCtx = useContext(CurrentUserContext);
+    const currentUser = currentUserCtx?.currentUser;
+
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = () => {
@@ -23,7 +26,7 @@ const ReportModal = ({
             method: "POST",
             body: JSON.stringify({
                 reported: survivor.id,
-                reporter: userID,
+                reporter: currentUser?.id,
             }),
             headers: {
                 "Content-Type": "application/json",

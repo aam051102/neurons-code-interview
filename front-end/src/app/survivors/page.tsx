@@ -3,12 +3,15 @@ import RegisterModal from "@/components/RegisterModal";
 import ReportModal from "@/components/ReportModal";
 import TradeModal from "@/components/TradeModal";
 import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
+import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import { userID } from "@/userData";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 export default function Survivors() {
+    const currentUserCtx = useContext(CurrentUserContext);
+    const currentUser = currentUserCtx?.currentUser;
+
     const [survivors, setSurvivors] = useState<ISurvivor[]>([]);
     const [reporting, setReporting] = useState<ISurvivor | undefined>(
         undefined
@@ -71,7 +74,7 @@ export default function Survivors() {
                                     <td className="td_width-hug">
                                         {survivor.name}
 
-                                        {survivor.id === userID ? (
+                                        {survivor.id === currentUser?.id ? (
                                             <div className="inline-block ml-2.5 text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200 text-gray-700">
                                                 You
                                             </div>
@@ -101,7 +104,7 @@ export default function Survivors() {
                                     </td>
                                     <td className="td_width-auto">
                                         <div className="flex gap-2.5 justify-end invisible group-hover:visible">
-                                            {survivor.id !== userID &&
+                                            {survivor.id !== currentUser?.id &&
                                             survivor.receivedReports.length <
                                                 MAX_REPORTS_FOR_INFECTION ? (
                                                 <>
