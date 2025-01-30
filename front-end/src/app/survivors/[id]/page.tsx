@@ -113,6 +113,20 @@ export default function Survivor() {
                         </p>
                     </div>
                 ))}
+
+                <h2 className="text-xl font-black uppercase mb-2.5 mt-5">
+                    Location
+                </h2>
+
+                <div className="w-full">
+                    <iframe
+                        width="100%"
+                        height="600"
+                        className="border-0 m-0 w-[600px] h-[600px]"
+                        scrolling="no"
+                        src={`https://maps.google.com/maps?width=100&height=600&hl=en&q=${survivor.latitude},${survivor.longitude}+(Survivor%20Location)&t=h&z=12&ie=UTF8&iwloc=B&output=embed`}
+                    ></iframe>
+                </div>
             </div>
 
             <ReportModal
