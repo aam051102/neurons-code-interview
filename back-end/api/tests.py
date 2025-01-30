@@ -6,6 +6,7 @@ from base.models import Survivor
 
 class SurvivorsTestCase(APITestCase):
     def test_survivor_create(self):
+        """Tests creating a survivor without an inventory."""
         createData = {
             "name": "John Smith",
             "age": 18,
@@ -19,7 +20,7 @@ class SurvivorsTestCase(APITestCase):
 
         newSurvivor = Survivor.objects.get(id=response.data["id"])
         newSurvivorSerializer = SurvivorSerializer(newSurvivor)
-        
+
         self.assertEqual(newSurvivorSerializer.data["name"], createData["name"])
         self.assertEqual(newSurvivorSerializer.data["age"], createData["age"])
         self.assertEqual(newSurvivorSerializer.data["gender"], createData["gender"])
