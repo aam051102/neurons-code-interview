@@ -5,17 +5,16 @@ export type ISurvivor = {
     gender: number;
     longitude: string;
     latitude: string;
-
-    // TODO: NOT REAL - HANDLE THIS
-    infectionReports: number;
-    inventory: [
-        {
-            type: "water";
-            count: 3;
-        },
-        {
-            type: "ammo";
-            count: 7;
-        }
-    ];
+    sentReports: {
+        reported: number;
+        reporter: number;
+    }[];
+    receivedReports: {
+        reported: number;
+        reporter: number;
+    }[];
+    inventory: {
+        itemType: number;
+        count: number;
+    }[];
 };

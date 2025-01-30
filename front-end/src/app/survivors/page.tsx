@@ -2,6 +2,7 @@
 import RegisterModal from "@/components/RegisterModal";
 import ReportModal from "@/components/ReportModal";
 import TradeModal from "@/components/TradeModal";
+import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
 import { ISurvivor } from "@/types/ISurvivor";
 import { userID } from "@/userData";
 import Link from "next/link";
@@ -83,13 +84,22 @@ export default function Survivors() {
                                         {survivor.latitude}
                                     </td>
                                     <td className="td_width-hug">
-                                        {survivor.infectionReports >= 3
-                                            ? "INFECTED"
-                                            : "OK"}
+                                        {survivor.receivedReports.length >=
+                                        MAX_REPORTS_FOR_INFECTION ? (
+                                            <span className="text-red-500 font-bold">
+                                                INFECTED
+                                            </span>
+                                        ) : (
+                                            <span className="text-green-500 font-bold">
+                                                OK
+                                            </span>
+                                        )}
                                     </td>
                                     <td className="td_width-auto">
                                         <div className="flex gap-2.5 justify-end invisible group-hover:visible">
-                                            {survivor.id !== userID ? (
+                                            {survivor.id !== userID &&
+                                            survivor.receivedReports.length <
+                                                MAX_REPORTS_FOR_INFECTION ? (
                                                 <>
                                                     <button
                                                         type="button"

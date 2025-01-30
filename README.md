@@ -6,3 +6,5 @@
 ## Front-end
 `cd front-end`
 `npm run dev`
+
+Then go to localhost:3000/survivors
