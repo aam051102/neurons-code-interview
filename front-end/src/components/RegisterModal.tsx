@@ -1,4 +1,8 @@
-import { ITEM_DATA_MAP } from "@/constants";
+import {
+    ITEM_DATA_MAP,
+    LATITUDE_PATTERN,
+    LONGITUDE_PATTERN,
+} from "@/constants";
 import React, { FormEventHandler, useState } from "react";
 
 type IRegisterForm = {
@@ -87,6 +91,7 @@ const RegisterModal = ({
                                 name="name"
                                 className="field_std"
                                 placeholder="John Doe Smith"
+                                required
                             />
                         </div>
 
@@ -99,6 +104,7 @@ const RegisterModal = ({
                                 className="field_std"
                                 min={0}
                                 max={200}
+                                required
                             />
                         </div>
 
@@ -109,6 +115,7 @@ const RegisterModal = ({
                                 id="register_gender"
                                 className="field_std"
                                 defaultValue={"0"}
+                                required
                             >
                                 <option value="0">Male</option>
                                 <option value="1">Female</option>
@@ -123,6 +130,8 @@ const RegisterModal = ({
                                 name="latitude"
                                 className="field_std"
                                 placeholder="0.000000"
+                                pattern={LATITUDE_PATTERN}
+                                required
                             />
                         </div>
 
@@ -136,6 +145,8 @@ const RegisterModal = ({
                                 name="longitude"
                                 className="field_std"
                                 placeholder="0.000000"
+                                pattern={LONGITUDE_PATTERN}
+                                required
                             />
                         </div>
 
@@ -160,6 +171,7 @@ const RegisterModal = ({
                                                 min={0}
                                                 className="field_std field_std_small text-right col-span-1"
                                                 defaultValue={0}
+                                                required
                                             />
                                         </React.Fragment>
                                     )

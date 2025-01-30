@@ -71,3 +71,11 @@ body {
 .field_std_small {
   @apply p-1.5 py-0;
 }
+
+.field_std:invalid {
+  @apply bg-red-200 text-red-600;
+}
+
+.field_std:invalid::placeholder {
+  @apply text-red-400
+}

@@ -1,3 +1,4 @@
+import { LATITUDE_PATTERN, LONGITUDE_PATTERN } from "@/constants";
 import { CurrentUserContext } from "@/context";
 import { FormEventHandler, useContext, useState } from "react";
 
@@ -73,6 +74,8 @@ const LocationModal = ({
                                 name="latitude"
                                 className="field_std"
                                 placeholder="0.000000"
+                                pattern={LATITUDE_PATTERN}
+                                required
                             />
                         </div>
 
@@ -86,6 +89,8 @@ const LocationModal = ({
                                 name="longitude"
                                 className="field_std"
                                 placeholder="0.000000"
+                                pattern={LONGITUDE_PATTERN}
+                                required
                             />
                         </div>
                     </div>
