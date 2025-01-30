@@ -41,8 +41,14 @@ List all survivors.
 #### Returns
 Array of survivor objects.
 
-### Create: `/survivors/report`
+### Report Infection: `/survivors/report`
 Report an infection for a survivor.
 
 #### Params (body)
 InfectionReport object
+
+### Update: `/survivors/update`
+Update survivor.
+
+#### Params (body)
+Partial survivor object. ID required.

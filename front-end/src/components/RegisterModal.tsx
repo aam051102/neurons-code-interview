@@ -20,6 +20,8 @@ const RegisterModal = ({
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const onSubmit: FormEventHandler = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
         const formData = new FormData(event.target as HTMLFormElement);
         const data = {
             name: formData.get("name") as IRegisterForm["name"],
@@ -37,8 +39,8 @@ const RegisterModal = ({
                 "Content-Type": "application/json",
             },
         })
-            .then((res) => res.json())
-            .then(async () => {
+            .then(async (res) => {
+                if (res.status >= 400) throw new Error();
                 await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
