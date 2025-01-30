@@ -2,18 +2,11 @@
 
 import ReportModal from "@/components/ReportModal";
 import TradeModal from "@/components/TradeModal";
-import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
+import { ITEM_DATA_MAP, MAX_REPORTS_FOR_INFECTION } from "@/constants";
 import { ISurvivor } from "@/types/ISurvivor";
 import { userID } from "@/userData";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-
-const itemTypeNameMap: Record<number, string> = {
-    0: "Water",
-    1: "Ammunition",
-    2: "Food",
-    3: "Medication",
-};
+import { useCallback, useEffect, useState } from "react";
 
 export default function Survivor() {
     const [survivor, setSurvivor] = useState<ISurvivor | undefined>(undefined);
@@ -24,7 +17,7 @@ export default function Survivor() {
     const [isReportModalOpen, setIsReportModalOpen] = useState<boolean>(false);
     const [isTradeModalOpen, setIsTradeModalOpen] = useState<boolean>(false);
 
-    useEffect(() => {
+    const refetch = useCallback(async () => {
         if (!id) return;
 
         fetch(`http://localhost:8000/survivors/find?format=json&id=${id}`)
@@ -33,6 +26,10 @@ export default function Survivor() {
                 setSurvivor(res);
             });
     }, [id]);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     if (!survivor)
         return (
@@ -107,7 +104,7 @@ export default function Survivor() {
                     <div key={item.itemType}>
                         <p>
                             <span className="font-bold">
-                                {itemTypeNameMap[item.itemType]}:
+                                {ITEM_DATA_MAP[item.itemType]?.name}:
                             </span>{" "}
                             {item.count}
                         </p>
@@ -119,12 +116,14 @@ export default function Survivor() {
                 isOpen={isReportModalOpen}
                 setIsOpen={setIsReportModalOpen}
                 survivor={survivor}
+                refetch={refetch}
             />
 
             <TradeModal
                 isOpen={isTradeModalOpen}
                 setIsOpen={setIsTradeModalOpen}
                 survivor={survivor}
+                refetch={refetch}
             />
         </>
     );

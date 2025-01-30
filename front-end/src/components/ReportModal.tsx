@@ -6,10 +6,12 @@ const ReportModal = ({
     survivor,
     isOpen,
     setIsOpen,
+    refetch,
 }: {
     survivor?: ISurvivor;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
+    refetch: () => Promise<void>;
 }) => {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +30,8 @@ const ReportModal = ({
             },
         })
             .then((res) => res.json())
-            .then(() => {
+            .then(async () => {
+                await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
                 alert("Report successful!");

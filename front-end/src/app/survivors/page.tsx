@@ -6,7 +6,7 @@ import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
 import { ISurvivor } from "@/types/ISurvivor";
 import { userID } from "@/userData";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Survivors() {
     const [survivors, setSurvivors] = useState<ISurvivor[]>([]);
@@ -16,13 +16,17 @@ export default function Survivors() {
     const [trading, setTrading] = useState<ISurvivor | undefined>(undefined);
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
-    useEffect(() => {
+    const refetch = useCallback(async () => {
         fetch(`http://localhost:8000/survivors/list?format=json`)
             .then((res) => res.json())
             .then((res) => {
                 setSurvivors(res);
             });
     }, []);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     return (
         <>
@@ -146,17 +150,20 @@ export default function Survivors() {
                 isOpen={!!reporting}
                 setIsOpen={() => setReporting(undefined)}
                 survivor={reporting}
+                refetch={refetch}
             />
 
             <TradeModal
                 isOpen={!!trading}
                 setIsOpen={() => setTrading(undefined)}
                 survivor={trading}
+                refetch={refetch}
             />
 
             <RegisterModal
                 isOpen={!!isRegistering}
                 setIsOpen={() => setIsRegistering(false)}
+                refetch={refetch}
             />
         </>
     );

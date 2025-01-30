@@ -4,10 +4,12 @@ const TradeModal = ({
     survivor,
     isOpen,
     setIsOpen,
+    refetch,
 }: {
     survivor?: ISurvivor;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
+    refetch: () => Promise<void>;
 }) => {
     return isOpen && survivor ? (
         <dialog
@@ -22,8 +24,9 @@ const TradeModal = ({
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => {
+                        onClick={async () => {
                             // TODO: Propose trade
+                            await refetch();
                             setIsOpen(false);
                         }}
                     >

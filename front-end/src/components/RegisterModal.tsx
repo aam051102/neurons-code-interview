@@ -11,9 +11,11 @@ type IRegisterForm = {
 const RegisterModal = ({
     isOpen,
     setIsOpen,
+    refetch,
 }: {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
+    refetch: () => Promise<void>;
 }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -36,7 +38,8 @@ const RegisterModal = ({
             },
         })
             .then((res) => res.json())
-            .then(() => {
+            .then(async () => {
+                await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
                 alert("Registration successful!");

@@ -6,10 +6,17 @@
 - gender: 0|1 (M/F)
 - latitude: string
 - longitude: string
+- inventory: InventoryItem[]
+- receivedReports: InfectionReport[]
+- sentReports: InfectionReport[]
 
-### Infection Report
+### InfectionReport
 - reported: number (Survivor ID)
 - reporter: number (Survivor ID)
+
+### InventoryItem
+- itemType: number
+- count: number
 
 # Endpoints
 ## Survivors
@@ -38,4 +45,4 @@ Array of survivor objects.
 Report an infection for a survivor.
 
 #### Params (body)
-Infection Report object
+InfectionReport object
