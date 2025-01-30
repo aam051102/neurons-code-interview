@@ -13,6 +13,9 @@ const TradeModal = ({
     setIsOpen: (isOpen: boolean) => void;
     refetch: () => Promise<void>;
 }) => {
+    const leftValue = 0;
+    const rightValue = 0;
+
     return isOpen && survivor ? (
         <dialog
             open={isOpen}
@@ -26,19 +29,19 @@ const TradeModal = ({
                         listed in the following table:
                     </p>
 
-                    <div className="grid gap-5 grid-cols-4">
+                    <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
                         {Object.entries(ITEM_DATA_MAP).map(([key, item]) => (
                             <div className="flex justify-between" key={key}>
                                 <p>
-                                    {item.name} ({item.value * 100})
+                                    {item.name} ({item.value * 100} U)
                                 </p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="flex gap-10 mb-10">
-                    <div className="max-w-md">
+                <div className="flex gap-10 mb-10 max-w-screen-md flex-col md:flex-row">
+                    <div className="w-full">
                         <h3 className="text-xl font-black mb-2.5 uppercase">
                             Your inventory
                         </h3>
@@ -81,10 +84,10 @@ const TradeModal = ({
                         </div>
                     </div>
 
-                    <hr className="w-px bg-gray-200 border-0 h-auto" />
+                    <hr className="w-px bg-gray-200 border-0 h-auto flex-shrink-0 hidden md:block" />
 
-                    <div className="max-w-md">
-                        <h3 className="text-xl font-black mb-2.5 uppercase text-right">
+                    <div className="w-full">
+                        <h3 className="text-xl font-black mb-2.5 uppercase md:text-right">
                             {survivor.name}&apos;s inventory
                         </h3>
 
@@ -109,7 +112,12 @@ const TradeModal = ({
                                         </label>
 
                                         <div className="flex justify-end">
-                                            {0}
+                                            {/* Would be faster as a dictionary, but since there are only 4 items, there's not much point in overcomplicating it (yet). */}
+                                            {survivor.inventory.find(
+                                                (survivorItem) =>
+                                                    survivorItem.itemType ===
+                                                    Number(key)
+                                            )?.count ?? 0}
                                         </div>
 
                                         <input
@@ -119,6 +127,13 @@ const TradeModal = ({
                                             min={0}
                                             className="field_std field_std_small col-span-1 text-right"
                                             defaultValue={0}
+                                            max={
+                                                survivor.inventory.find(
+                                                    (survivorItem) =>
+                                                        survivorItem.itemType ===
+                                                        Number(key)
+                                                )?.count ?? 0
+                                            }
                                         />
                                     </React.Fragment>
                                 )
@@ -129,9 +144,18 @@ const TradeModal = ({
 
                 <div className="mb-5 text-center">
                     <p className="text-sm">Current balance:</p>
-                    <p className="text-2xl font-black font-mono">
-                        {0} / {0}
-                    </p>
+
+                    <div className="flex gap-5 justify-center items-center">
+                        <p className="text-2xl font-black font-mono">
+                            {leftValue} U
+                        </p>
+
+                        <hr className="border-0 bg-gray-200 w-px h-10" />
+
+                        <p className="text-2xl font-black font-mono">
+                            {rightValue} U
+                        </p>
+                    </div>
                 </div>
 
                 <div className="flex gap-5 justify-left">
