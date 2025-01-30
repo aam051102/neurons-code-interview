@@ -1,6 +1,7 @@
 import { ITEM_DATA_MAP } from "@/constants";
+import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import React from "react";
+import React, { useContext } from "react";
 
 const TradeModal = ({
     survivor,
@@ -13,6 +14,9 @@ const TradeModal = ({
     setIsOpen: (isOpen: boolean) => void;
     refetch: () => Promise<void>;
 }) => {
+    const currentUserCtx = useContext(CurrentUserContext);
+    const currentUser = currentUserCtx?.currentUser;
+
     const leftValue = 0;
     const rightValue = 0;
 
@@ -67,7 +71,12 @@ const TradeModal = ({
                                         </label>
 
                                         <div className="flex justify-end">
-                                            {0}
+                                            {/* Would be faster as a dictionary, but since there are only 4 items, there's not much point in overcomplicating it (yet). */}
+                                            {currentUser?.inventory.find(
+                                                (survivorItem) =>
+                                                    survivorItem.itemType ===
+                                                    Number(key)
+                                            )?.count ?? 0}
                                         </div>
 
                                         <input
@@ -77,6 +86,13 @@ const TradeModal = ({
                                             min={0}
                                             className="field_std field_std_small text-right col-span-1"
                                             defaultValue={0}
+                                            max={
+                                                currentUser?.inventory.find(
+                                                    (survivorItem) =>
+                                                        survivorItem.itemType ===
+                                                        Number(key)
+                                                )?.count ?? 0
+                                            }
                                         />
                                     </React.Fragment>
                                 )

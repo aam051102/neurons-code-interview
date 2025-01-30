@@ -5,7 +5,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentUserContext } from "@/context";
 import { IUser } from "@/types/IUser";
 
@@ -30,8 +30,30 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const [currentUser, setCurrentUser] = useState<IUser | null>({
-        id: 5,
+        id: 12,
+        inventory: [],
     });
+
+    useEffect(() => {
+        if (!currentUser?.id) return;
+
+        // Faking a "login"
+        fetch(
+            `http://localhost:8000/survivors/find?format=json&id=${currentUser.id}`
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                if (!res) {
+                    alert("Something went wrong. User could not be found!");
+                    return;
+                }
+
+                setCurrentUser({
+                    id: currentUser.id,
+                    inventory: res.inventory,
+                });
+            });
+    }, [currentUser?.id]);
 
     return (
         <html lang="en">
