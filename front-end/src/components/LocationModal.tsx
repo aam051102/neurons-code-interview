@@ -19,8 +19,12 @@ const LocationModal = ({
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit: FormEventHandler = (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+        // NOTE: These two lines are commented out intentionally. If included, they prevent the page from reloading on submit.
+        // That's fine, but since the LocationModal is in the navbar and can come up on any page, forcing a refresh is the easiest way to update the data to match the modified location.
+
+        //event.stopPropagation();
+        //event.preventDefault();
+
         const formData = new FormData(event.target as HTMLFormElement);
         const data = {
             longitude: formData.get("longitude") as ILocationForm["longitude"],
