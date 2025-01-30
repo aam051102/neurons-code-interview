@@ -13,6 +13,7 @@ def listSurvivors(request):
 @api_view(["POST"])
 def createSurvivor(request):
     serializer = SurvivorSerializer(data=request.data)
+
     if serializer.is_valid():
         serializer.save()
         
@@ -21,15 +22,16 @@ def createSurvivor(request):
         # Also, I don't have enough experience to know what best practice is with Django, but I doubt this is the easiest way to create relations.
         inventory = request.data.get("inventory")
 
-        for i, x in enumerate(inventory):
-            inventory[i]["owner"] = serializer.data["id"]
+        if inventory and len(inventory) > 0:
+            for i, x in enumerate(inventory):
+                inventory[i]["owner"] = serializer.data["id"]
 
-        inventorySerializer = InventoryItemSerializer(data=inventory, many=True)
-        if inventorySerializer.is_valid():
-            inventorySerializer.save()
-        else:
-            # TODO: Preferably return some proper validation errors here.
-            return HttpResponse(status=500)
+            inventorySerializer = InventoryItemSerializer(data=inventory, many=True)
+            if inventorySerializer.is_valid():
+                inventorySerializer.save()
+            else:
+                # TODO: Preferably return some proper validation errors here.
+                return HttpResponse(status=500)
 
     else:
         # TODO: Preferably return some proper validation errors here.
@@ -49,7 +51,7 @@ def updateSurvivor(request):
 
 
 @api_view(['GET'])
-def findSurvivor(request):
+def findSurvivor(request):  
     item = Survivor.objects.get(id=int(request.GET.get("id", 0)))
     serializer = SurvivorSerializer(item)
     return Response(serializer.data)
