@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from base.models import Survivor
-from .serializers import SurvivorSerializer, InfectionReportSerializer
+from .serializers import SurvivorSerializer, InfectionReportSerializer, InventoryItemSerializer
 from django.http import HttpResponse
 
 @api_view(['GET'])
@@ -15,6 +15,22 @@ def createSurvivor(request):
     serializer = SurvivorSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        
+        # Create inventory
+        # NOTE: This is not the safest way of doing things, since the inventory could theoretically fail to be created, causing the endpoint to throw an error, while the user remains in the DB.
+        # Also, I don't have enough experience to know what best practice is with Django, but I doubt this is the easiest way to create relations.
+        inventory = request.data.get("inventory")
+
+        for i, x in enumerate(inventory):
+            inventory[i]["owner"] = serializer.data["id"]
+
+        inventorySerializer = InventoryItemSerializer(data=inventory, many=True)
+        if inventorySerializer.is_valid():
+            inventorySerializer.save()
+        else:
+            # TODO: Preferably return some proper validation errors here.
+            return HttpResponse(status=500)
+
     else:
         # TODO: Preferably return some proper validation errors here.
         return HttpResponse(status=500)

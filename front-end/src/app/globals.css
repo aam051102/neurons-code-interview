@@ -61,5 +61,9 @@ body {
 }
 
 .field_std {
-  @apply bg-gray-200 w-full p-2.5
+  @apply bg-gray-200 w-full p-2.5;
+}
+
+.field_std_small {
+  @apply p-1.5 py-0;
 }
