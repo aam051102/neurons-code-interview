@@ -5,7 +5,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CurrentUserContext } from "@/context";
 import { IUser } from "@/types/IUser";
 
@@ -30,15 +30,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const [currentUser, setCurrentUser] = useState<IUser | null>({
-        id: 12,
+        id: 14,
         inventory: [],
     });
 
-    useEffect(() => {
+    const refetchUser = useCallback(async () => {
         if (!currentUser?.id) return;
 
         // Faking a "login"
-        fetch(
+        await fetch(
             `http://localhost:8000/survivors/find?format=json&id=${currentUser.id}`
         )
             .then((res) => res.json())
@@ -55,13 +55,17 @@ export default function RootLayout({
             });
     }, [currentUser?.id]);
 
+    useEffect(() => {
+        refetchUser();
+    }, [refetchUser]);
+
     return (
         <html lang="en">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
             >
                 <CurrentUserContext.Provider
-                    value={{ currentUser, setCurrentUser }}
+                    value={{ currentUser, setCurrentUser, refetchUser }}
                 >
                     <Nav />
 

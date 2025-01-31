@@ -7,4 +7,5 @@ urlpatterns = [
     path("survivors/create", views.createSurvivor),
     path("survivors/update", views.updateSurvivor),
     path("survivors/report", views.reportSurvivor),
+    path("survivors/trade", views.tradeWithSurvivor),
 ]

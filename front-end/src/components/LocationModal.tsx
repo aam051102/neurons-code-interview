@@ -20,11 +20,8 @@ const LocationModal = ({
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit: FormEventHandler = (event) => {
-        // NOTE: These two lines are commented out intentionally. If included, they prevent the page from reloading on submit.
-        // That's fine, but since the LocationModal is in the navbar and can come up on any page, forcing a refresh is the easiest way to update the data to match the modified location.
-
-        //event.stopPropagation();
-        //event.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data = {
@@ -49,6 +46,10 @@ const LocationModal = ({
                 setIsLoading(false);
                 setIsOpen(false);
                 alert("Location change successful!");
+
+                // NOTE: This is not ideal, but it's the quickest way to make sure that the data on the page is updated to match the location change.
+                // Ideally, this should be a call to a refetch function of some sort.
+                window.location.reload();
             })
             .catch(() => {
                 alert("Error! Location change failed. Please try again later.");
