@@ -1,7 +1,12 @@
 import { ITEM_DATA_MAP } from "@/constants";
 import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
+const emptyItems = Object.entries(ITEM_DATA_MAP).reduce(
+    (prev, [key]) => ({ ...prev, [key]: 0 }),
+    {}
+);
 
 const TradeModal = ({
     survivor,
@@ -17,8 +22,20 @@ const TradeModal = ({
     const currentUserCtx = useContext(CurrentUserContext);
     const currentUser = currentUserCtx?.currentUser;
 
-    const leftValue = 0;
-    const rightValue = 0;
+    // Maps where key is an ITEM_DATA_MAP key and value is the selected unit count
+    const [selectedItemsLeft, setSelectedItemsLeft] =
+        useState<Record<number, number>>(emptyItems);
+    const [selectedItemsRight, setSelectedItemsRight] =
+        useState<Record<number, number>>(emptyItems);
+
+    const leftValue = Object.entries(selectedItemsLeft).reduce<number>(
+        (prev, [key, count]) => prev + ITEM_DATA_MAP[Number(key)].value * count,
+        0
+    );
+    const rightValue = Object.entries(selectedItemsRight).reduce<number>(
+        (prev, [key, count]) => prev + ITEM_DATA_MAP[Number(key)].value * count,
+        0
+    );
 
     return isOpen && survivor ? (
         <dialog
@@ -64,7 +81,7 @@ const TradeModal = ({
                                 ([key, item]) => (
                                     <React.Fragment key={key}>
                                         <label
-                                            htmlFor="register_inventory_0"
+                                            htmlFor="register_left_inventory_0"
                                             className="col-span-1"
                                         >
                                             {item.name}
@@ -81,11 +98,27 @@ const TradeModal = ({
 
                                         <input
                                             type="number"
-                                            id={`register_inventory_${key}`}
-                                            name={`inventory_${key}`}
+                                            id={`register_left_inventory_${key}`}
+                                            name={`left_inventory_${key}`}
                                             min={0}
                                             className="field_std field_std_small text-right col-span-1"
-                                            defaultValue={0}
+                                            value={
+                                                selectedItemsLeft[Number(key)]
+                                            }
+                                            onChange={(e) => {
+                                                setSelectedItemsLeft(
+                                                    (prevState) => {
+                                                        const newState = {
+                                                            ...prevState,
+                                                        };
+                                                        newState[Number(key)] =
+                                                            Number(
+                                                                e.target.value
+                                                            );
+                                                        return newState;
+                                                    }
+                                                );
+                                            }}
                                             max={
                                                 currentUser?.inventory.find(
                                                     (survivorItem) =>
@@ -104,7 +137,7 @@ const TradeModal = ({
 
                     <div className="w-full">
                         <h3 className="text-xl font-black mb-2.5 uppercase md:text-right">
-                            {survivor.name}&apos;s inventory
+                            {survivor.name.split(" ")[0]}&apos;s inventory
                         </h3>
 
                         <div className="grid gap-x-5 gap-y-2.5 grid-cols-3">
@@ -121,7 +154,7 @@ const TradeModal = ({
                                 ([key, item]) => (
                                     <React.Fragment key={key}>
                                         <label
-                                            htmlFor="register_inventory_0"
+                                            htmlFor="register_right_inventory_0"
                                             className="col-span-1 text-left"
                                         >
                                             {item.name}
@@ -138,11 +171,27 @@ const TradeModal = ({
 
                                         <input
                                             type="number"
-                                            id={`register_inventory_${key}`}
-                                            name={`inventory_${key}`}
+                                            id={`register_right_inventory_${key}`}
+                                            name={`right_inventory_${key}`}
                                             min={0}
                                             className="field_std field_std_small col-span-1 text-right"
-                                            defaultValue={0}
+                                            value={
+                                                selectedItemsRight[Number(key)]
+                                            }
+                                            onChange={(e) => {
+                                                setSelectedItemsRight(
+                                                    (prevState) => {
+                                                        const newState = {
+                                                            ...prevState,
+                                                        };
+                                                        newState[Number(key)] =
+                                                            Number(
+                                                                e.target.value
+                                                            );
+                                                        return newState;
+                                                    }
+                                                );
+                                            }}
                                             max={
                                                 survivor.inventory.find(
                                                     (survivorItem) =>
@@ -159,7 +208,7 @@ const TradeModal = ({
                 </div>
 
                 <div className="mb-5 text-center">
-                    <p className="text-sm">Current balance:</p>
+                    <p className="text-sm">Current balance</p>
 
                     <div className="flex gap-5 justify-center items-center">
                         <p className="text-2xl font-black font-mono">
@@ -183,6 +232,12 @@ const TradeModal = ({
                             await refetch();
                             setIsOpen(false);
                         }}
+                        disabled={leftValue !== rightValue}
+                        title={
+                            leftValue !== rightValue
+                                ? "The trade must be equivalent to proceed."
+                                : ""
+                        }
                     >
                         Propose trade
                     </button>

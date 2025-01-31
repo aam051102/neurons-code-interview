@@ -23,6 +23,10 @@ body {
   @apply bg-green-600 border-0 text-white hover:bg-green-800;
 }
 
+.button_std_positive:disabled {
+  @apply cursor-not-allowed hover:bg-green-600 hover:bg-opacity-50 bg-green-600 bg-opacity-50;
+}
+
 .table_wrapper {
   @apply overflow-auto max-h-screen;
 }
