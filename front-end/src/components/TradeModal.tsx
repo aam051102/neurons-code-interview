@@ -290,13 +290,13 @@ const TradeModal = ({
 
                         <div className="flex gap-5 justify-center items-center">
                             <p className="text-2xl font-black font-mono">
-                                {leftValue} U
+                                {leftValue * 100} U
                             </p>
 
                             <hr className="border-0 bg-gray-200 w-px h-10" />
 
                             <p className="text-2xl font-black font-mono">
-                                {rightValue} U
+                                {rightValue * 100} U
                             </p>
                         </div>
                     </div>
