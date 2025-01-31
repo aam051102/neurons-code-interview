@@ -1,7 +1,7 @@
 import { ITEM_DATA_MAP } from "@/constants";
 import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const emptyItems = Object.entries(ITEM_DATA_MAP).reduce(
     (prev, [key]) => ({ ...prev, [key]: 0 }),
@@ -36,6 +36,12 @@ const TradeModal = ({
         (prev, [key, count]) => prev + ITEM_DATA_MAP[Number(key)].value * count,
         0
     );
+
+    // Reset modal values on close
+    useEffect(() => {
+        setSelectedItemsRight(emptyItems);
+        setSelectedItemsLeft(emptyItems);
+    }, [isOpen]);
 
     return isOpen && survivor ? (
         <dialog
