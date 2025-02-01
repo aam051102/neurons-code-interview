@@ -31,30 +31,36 @@ export default function RootLayout({
 }>) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
-    const refetchUser = useCallback(async () => {
-        if (!currentUser?.id) return;
+    const refetchUser = useCallback(
+        async (id?: number) => {
+            const actualId = id ?? currentUser?.id;
+            if (!actualId) return;
 
-        // Faking a "login"
-        await fetch(
-            `http://localhost:8000/survivors/find?format=json&id=${currentUser.id}`
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                if (!res) {
-                    alert("Something went wrong. User could not be found!");
-                    return;
-                }
+            // Faking a "login"
+            await fetch(
+                `http://localhost:8000/survivors/find?format=json&id=${actualId}`
+            )
+                .then((res) => res.json())
+                .then((res) => {
+                    if (!res) {
+                        alert("Something went wrong. User could not be found!");
+                        return;
+                    }
 
-                setCurrentUser({
-                    id: currentUser.id,
-                    inventory: res.inventory,
+                    setCurrentUser({
+                        id: actualId,
+                        inventory: res.inventory,
+                    });
                 });
-            });
-    }, [currentUser?.id]);
+        },
+        [currentUser?.id]
+    );
 
     useEffect(() => {
-        refetchUser();
-    }, [refetchUser]);
+        const savedUserID = Number(localStorage.getItem("userID"));
+        if (currentUser?.id === savedUserID) return;
+        refetchUser(savedUserID);
+    }, [refetchUser, currentUser?.id]);
 
     return (
         <html lang="en">

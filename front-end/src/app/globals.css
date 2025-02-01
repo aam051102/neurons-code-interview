@@ -12,7 +12,7 @@ body {
 }
 
 .button_std {
-  @apply inline-block py-1.5 px-2.5 bg-gray-200 hover:bg-gray-400 font-normal;
+  @apply inline-block py-1.5 px-2.5 bg-gray-200 hover:bg-gray-400 font-normal rounded-sm;
 }
 
 .button_std_danger {
@@ -69,7 +69,7 @@ body {
 }
 
 .field_std {
-  @apply bg-gray-200 w-full p-2.5 outline-none;
+  @apply bg-gray-200 w-full p-2.5 outline-none rounded-sm;
 }
 
 .field_std_small {

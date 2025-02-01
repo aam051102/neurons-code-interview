@@ -42,6 +42,7 @@ export default function Home() {
                     id: data.id,
                     inventory: res.inventory,
                 });
+                localStorage.setItem("userID", data.id.toString()); // Using localStorage rather than cookies because it's faster to use without libraries.
                 setIsLoading(false);
                 router.push("/survivors");
             })
