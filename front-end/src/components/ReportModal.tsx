@@ -1,6 +1,7 @@
 import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
 import { useContext, useState } from "react";
+import Modal from "./Modal";
 
 const ReportModal = ({
     survivor,
@@ -17,6 +18,8 @@ const ReportModal = ({
     const currentUser = currentUserCtx?.currentUser;
 
     const [isLoading, setIsLoading] = useState(false);
+    const [subModalChildren, setSubModalChildren] =
+        useState<React.ReactNode>(null);
 
     const onSubmit = () => {
         if (!survivor) return;
@@ -37,51 +40,76 @@ const ReportModal = ({
                 await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
-                alert("Report successful!");
+                setSubModalChildren("Report successful!");
             })
             .catch(() => {
-                alert("Error! Report failed. Please try again later.");
+                setSubModalChildren(
+                    "Error! Report failed. Please try again later."
+                );
             });
     };
 
-    return isOpen && survivor ? (
-        <dialog
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-            className="modal_std"
-        >
-            <div className="modal_std_inner">
-                <h2 className="mb-2.5 font-black text-lg">Report Infection</h2>
+    return (
+        <>
+            {isOpen && survivor ? (
+                <dialog
+                    open={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    className="modal_std"
+                >
+                    <div className="modal_std_inner">
+                        <h2 className="mb-2.5 font-black text-lg">
+                            Report Infection
+                        </h2>
 
-                <p className="mb-5">
-                    Are you sure you want to report an infection for{" "}
-                    {survivor.name}?
-                </p>
+                        <p className="mb-5">
+                            Are you sure you want to report an infection for{" "}
+                            {survivor.name}?
+                        </p>
 
-                <div className="flex gap-5">
-                    <button
-                        type="button"
-                        className="button_std button_std_danger"
-                        onClick={onSubmit}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? "Loading..." : "Report"}
-                    </button>
+                        <div className="flex gap-5">
+                            <button
+                                type="button"
+                                className="button_std button_std_danger"
+                                onClick={onSubmit}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? "Loading..." : "Report"}
+                            </button>
 
+                            <button
+                                type="button"
+                                className="button_std"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                }}
+                                disabled={isLoading}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </dialog>
+            ) : null}
+
+            <Modal
+                isOpen={!!subModalChildren}
+                onClose={() => setSubModalChildren(null)}
+            >
+                {subModalChildren}
+
+                <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => {
-                            setIsOpen(false);
-                        }}
-                        disabled={isLoading}
+                        onClick={() => setSubModalChildren(null)}
                     >
-                        Cancel
+                        Okay
                     </button>
                 </div>
-            </div>
-        </dialog>
-    ) : null;
+            </Modal>
+        </>
+    );
 };
 
 export default ReportModal;
