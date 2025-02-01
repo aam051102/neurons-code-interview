@@ -82,22 +82,26 @@ export default function Survivors() {
                                             ) : null}
                                         </a>
                                     </td>
+
                                     <td className="td_width-hug td_link">
                                         <a href={`/survivors/${survivor.id}`}>
                                             {survivor.age}
                                         </a>
                                     </td>
+
                                     <td className="td_width-hug td_link">
                                         <a href={`/survivors/${survivor.id}`}>
                                             {survivor.gender === 0 ? "M" : "F"}
                                         </a>
                                     </td>
+
                                     <td className="td_width-hug td_link">
                                         <a href={`/survivors/${survivor.id}`}>
                                             {survivor.longitude},{" "}
                                             {survivor.latitude}
                                         </a>
                                     </td>
+
                                     <td className="td_width-hug td_link">
                                         <a href={`/survivors/${survivor.id}`}>
                                             {survivor.receivedReports.length >=
@@ -112,6 +116,7 @@ export default function Survivors() {
                                             )}
                                         </a>
                                     </td>
+
                                     <td
                                         className="td_width-auto td_link"
                                         colSpan={2}
