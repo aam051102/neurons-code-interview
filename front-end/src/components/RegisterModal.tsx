@@ -79,7 +79,7 @@ const RegisterModal = ({
             className="modal_std"
         >
             <div className="modal_std_inner">
-                <h2 className="mb-5 font-black text-lg">Register survivor</h2>
+                <h2 className="mb-5 font-black text-lg">Register Survivor</h2>
 
                 <form onSubmit={onSubmit}>
                     <div className="flex gap-2.5 flex-col mb-10">

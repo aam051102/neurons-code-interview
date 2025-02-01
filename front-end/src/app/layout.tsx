@@ -2,20 +2,15 @@
 
 "use client";
 //import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { useCallback, useEffect, useState } from "react";
 import { CurrentUserContext } from "@/context";
 import { IUser } from "@/types/IUser";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const notoSans = Noto_Sans({
+    variable: "--font-noto-sans",
     subsets: ["latin"],
 });
 
@@ -64,9 +59,7 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
-            >
+            <body className={`${notoSans.variable} antialiased bg-white`}>
                 <CurrentUserContext.Provider
                     value={{ currentUser, setCurrentUser, refetchUser }}
                 >

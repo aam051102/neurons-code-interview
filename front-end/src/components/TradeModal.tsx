@@ -120,7 +120,7 @@ const TradeModal = ({
                 <div className="p-5 mb-5 rounded-sm border border-blue-500 bg-blue-200 text-blue-900">
                     <p className="mb-2.5 font-bold">
                         Remember! All trades must be equal based on the values
-                        listed in the following table:
+                        listed in the following table.
                     </p>
 
                     <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
@@ -176,6 +176,7 @@ const TradeModal = ({
                                                 name={`left_inventory_${key}`}
                                                 min={0}
                                                 className="field_std field_std_small text-right col-span-1"
+                                                dir="rtl"
                                                 value={
                                                     selectedItemsLeft[
                                                         Number(key)
@@ -250,6 +251,7 @@ const TradeModal = ({
                                                 type="number"
                                                 id={`register_right_inventory_${key}`}
                                                 name={`right_inventory_${key}`}
+                                                dir="rtl"
                                                 min={0}
                                                 className="field_std field_std_small col-span-1 text-right"
                                                 value={

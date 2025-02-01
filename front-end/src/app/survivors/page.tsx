@@ -5,7 +5,6 @@ import TradeModal from "@/components/TradeModal";
 import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
 import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
-import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
 
 export default function Survivors() {
@@ -65,54 +64,71 @@ export default function Survivors() {
                                 <th className="text-left td_width-hug">
                                     Status
                                 </th>
-                                <th className="td_width-auto"></th>
-                                <th className="text-right td_width-hug"></th>
+                                <th className="td_width-auto_blank"></th>
+                                <th className="td_width-auto_blank w-0 whitespace-nowrap"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {survivors.map((survivor) => (
-                                <tr key={survivor.id} className="group">
-                                    <td className="td_width-hug">
-                                        {survivor.name}
+                                <tr key={survivor.id} className="group tr_link">
+                                    <td className="td_width-hug td_link">
+                                        <a href={`/survivors/${survivor.id}`}>
+                                            {survivor.name}
 
-                                        {survivor.id === currentUser?.id ? (
-                                            <div className="inline-block ml-2.5 text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200 text-gray-700">
-                                                You
-                                            </div>
-                                        ) : null}
+                                            {survivor.id === currentUser?.id ? (
+                                                <div className="inline-block ml-2.5 text-sm py-1 p-1.5 bg-gray-100 border rounded-sm border-gray-200 text-gray-700">
+                                                    You
+                                                </div>
+                                            ) : null}
+                                        </a>
                                     </td>
-                                    <td className="td_width-hug">
-                                        {survivor.age}
+                                    <td className="td_width-hug td_link">
+                                        <a href={`/survivors/${survivor.id}`}>
+                                            {survivor.age}
+                                        </a>
                                     </td>
-                                    <td className="td_width-hug">
-                                        {survivor.gender === 0 ? "M" : "F"}
+                                    <td className="td_width-hug td_link">
+                                        <a href={`/survivors/${survivor.id}`}>
+                                            {survivor.gender === 0 ? "M" : "F"}
+                                        </a>
                                     </td>
-                                    <td className="td_width-hug">
-                                        {survivor.longitude},{" "}
-                                        {survivor.latitude}
+                                    <td className="td_width-hug td_link">
+                                        <a href={`/survivors/${survivor.id}`}>
+                                            {survivor.longitude},{" "}
+                                            {survivor.latitude}
+                                        </a>
                                     </td>
-                                    <td className="td_width-hug">
-                                        {survivor.receivedReports.length >=
-                                        MAX_REPORTS_FOR_INFECTION ? (
-                                            <span className="text-red-500 font-bold">
-                                                INFECTED
-                                            </span>
-                                        ) : (
-                                            <span className="text-green-500 font-bold">
-                                                OK
-                                            </span>
-                                        )}
+                                    <td className="td_width-hug td_link">
+                                        <a href={`/survivors/${survivor.id}`}>
+                                            {survivor.receivedReports.length >=
+                                            MAX_REPORTS_FOR_INFECTION ? (
+                                                <span className="text-red-500 font-bold">
+                                                    INFECTED
+                                                </span>
+                                            ) : (
+                                                <span className="text-green-500 font-bold">
+                                                    OK
+                                                </span>
+                                            )}
+                                        </a>
                                     </td>
-                                    <td className="td_width-auto"></td>
-                                    <td className="td_width-hug">
-                                        <div className="flex gap-2.5 justify-end invisible group-hover:visible">
+                                    <td
+                                        className="td_width-auto td_link"
+                                        colSpan={2}
+                                    >
+                                        <div className="flex items-center">
+                                            <a
+                                                href={`/survivors/${survivor.id}`}
+                                                className="block w-0 h-11 flex-grow"
+                                            ></a>
+
                                             {survivor.id !== currentUser?.id &&
                                             survivor.receivedReports.length <
                                                 MAX_REPORTS_FOR_INFECTION ? (
-                                                <div className="hidden sm:flex gap-2.5">
+                                                <div className="hidden justify-end  sm:flex gap-2.5 invisible group-hover:visible pr-5">
                                                     <button
                                                         type="button"
-                                                        className="button_std"
+                                                        className="button_std button_std_small"
                                                         onClick={() => {
                                                             setReporting(
                                                                 survivor
@@ -124,7 +140,7 @@ export default function Survivors() {
 
                                                     <button
                                                         type="button"
-                                                        className="button_std"
+                                                        className="button_std button_std_small"
                                                         onClick={() => {
                                                             setTrading(
                                                                 survivor
@@ -135,13 +151,6 @@ export default function Survivors() {
                                                     </button>
                                                 </div>
                                             ) : null}
-
-                                            <Link
-                                                href={`/survivors/${survivor.id}`}
-                                                className="button_std"
-                                            >
-                                                View
-                                            </Link>
                                         </div>
                                     </td>
                                 </tr>
