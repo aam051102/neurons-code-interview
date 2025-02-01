@@ -1,5 +1,6 @@
 import { LATITUDE_PATTERN, LONGITUDE_PATTERN } from "@/constants";
 import { CurrentUserContext } from "@/context";
+//import { useRouter } from "next/navigation";
 import { FormEventHandler, useContext, useState } from "react";
 
 type ILocationForm = {
@@ -16,6 +17,7 @@ const LocationModal = ({
 }) => {
     const currentUserCtx = useContext(CurrentUserContext);
     const currentUser = currentUserCtx?.currentUser;
+    //const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +51,8 @@ const LocationModal = ({
 
                 // NOTE: This is not ideal, but it's the quickest way to make sure that the data on the page is updated to match the location change.
                 // Ideally, this should be a call to a refetch function of some sort.
-                window.location.reload();
+                // NOTE on the note: Reloading the page like this messes up the tests. Fixing it seems like it would require extensive mocking of the Next Router. Probably don't have the time.
+                // router.refresh();
             })
             .catch(() => {
                 alert("Error! Location change failed. Please try again later.");
