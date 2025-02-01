@@ -11,7 +11,7 @@ const Nav = () => {
 
     return (
         <>
-            <nav className="fixed top-0 left-0 w-full bg-white shadow-sm flex-shrink-0">
+            <nav className="fixed top-0 left-0 w-full bg-white border-b border-b-gray-200 flex-shrink-0">
                 <div className="custom_container h-16 flex items-stretch justify-start">
                     <Link
                         href="/"

@@ -7,10 +7,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* General page content container */
 .custom_container {
   @apply px-5 lg:px-20 container mx-auto;
 }
 
+/* Button */
 .button_std {
   @apply inline-block py-1.5 px-2.5 bg-transparent border-2 text-gray-700 border-gray-700 hover:bg-gray-700 hover:text-white rounded-sm font-bold;
 }
@@ -27,6 +29,7 @@ body {
   @apply cursor-not-allowed hover:bg-green-600 hover:bg-opacity-50 bg-green-600 bg-opacity-50;
 }
 
+/* Table */
 .table_wrapper {
   @apply overflow-auto max-h-screen border border-gray-200 rounded-md;
 }
@@ -47,19 +50,21 @@ body {
   @apply bg-gray-100
 }
 
-.td_width-auto {
+.table_std .td_width-auto {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 200px;
-  max-width: 200px;
+  width: 0px;
+  max-width: 0px;
+  padding: 0;
 }
 
-.td_width-hug {
+.table_std .td_width-hug {
   white-space: nowrap;
   width: 0;
 }
 
+/* Modal */
 .modal_std {
   @apply fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-0 md:p-5;
 }
@@ -68,6 +73,7 @@ body {
   @apply bg-white md:rounded-md p-10 h-full overflow-auto w-full md:w-auto md:h-auto;
 }
 
+/* Input field */
 .field_std {
   @apply bg-gray-200 w-full p-2.5 outline-none rounded-sm;
 }
