@@ -115,6 +115,8 @@ const TradeModal = ({
             className="modal_std"
         >
             <div className="modal_std_inner">
+                <h2 className="mb-5 font-black text-lg">Trade</h2>
+
                 <div className="p-5 mb-5 rounded-sm border border-blue-500 bg-blue-200 text-blue-900">
                     <p className="mb-2.5 font-bold">
                         Remember! All trades must be equal based on the values
@@ -135,7 +137,7 @@ const TradeModal = ({
                 <form onSubmit={onSubmit}>
                     <div className="flex gap-10 mb-10 max-w-screen-md flex-col md:flex-row">
                         <div className="w-full">
-                            <h3 className="text-xl font-black mb-2.5 uppercase">
+                            <h3 className="text-lg font-black mb-2.5 uppercase">
                                 Your inventory
                             </h3>
 
@@ -211,7 +213,7 @@ const TradeModal = ({
                         <hr className="w-px bg-gray-200 border-0 h-auto flex-shrink-0 hidden md:block" />
 
                         <div className="w-full">
-                            <h3 className="text-xl font-black mb-2.5 uppercase md:text-right">
+                            <h3 className="text-lg font-black mb-2.5 uppercase md:text-right">
                                 {survivor.name.split(" ")[0]}&apos;s inventory
                             </h3>
 

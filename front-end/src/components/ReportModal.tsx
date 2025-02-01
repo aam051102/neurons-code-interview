@@ -51,6 +51,8 @@ const ReportModal = ({
             className="modal_std"
         >
             <div className="modal_std_inner">
+                <h2 className="mb-2.5 font-black text-lg">Report Infection</h2>
+
                 <p className="mb-5">
                     Are you sure you want to report an infection for{" "}
                     {survivor.name}?

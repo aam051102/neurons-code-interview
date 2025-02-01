@@ -28,7 +28,7 @@ body {
 }
 
 .table_wrapper {
-  @apply overflow-auto max-h-screen;
+  @apply overflow-auto max-h-screen border border-gray-200 rounded-md;
 }
 
 .table_std {
@@ -69,17 +69,17 @@ body {
 }
 
 .field_std {
-  @apply bg-gray-200 w-full p-2.5;
+  @apply bg-gray-200 w-full p-2.5 outline-none;
 }
 
 .field_std_small {
   @apply p-1.5 py-0;
 }
 
-.field_std:invalid {
+.field_std:user-invalid {
   @apply bg-red-200 text-red-600;
 }
 
-.field_std:invalid::placeholder {
+.field_std:user-invalid::placeholder {
   @apply text-red-400
 }

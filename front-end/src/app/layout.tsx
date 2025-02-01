@@ -29,10 +29,7 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [currentUser, setCurrentUser] = useState<IUser | null>({
-        id: 14,
-        inventory: [],
-    });
+    const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
     const refetchUser = useCallback(async () => {
         if (!currentUser?.id) return;

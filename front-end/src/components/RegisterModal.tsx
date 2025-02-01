@@ -79,7 +79,7 @@ const RegisterModal = ({
             className="modal_std"
         >
             <div className="modal_std_inner">
-                <p className="mb-5">Register survivor</p>
+                <h2 className="mb-5 font-black text-lg">Register survivor</h2>
 
                 <form onSubmit={onSubmit}>
                     <div className="flex gap-2.5 flex-col mb-10">
@@ -159,7 +159,7 @@ const RegisterModal = ({
                                     ([key, item]) => (
                                         <React.Fragment key={key}>
                                             <label
-                                                htmlFor="register_inventory_0"
+                                                htmlFor={`register_inventory_${key}`}
                                                 className="col-span-1"
                                             >
                                                 {item.name}

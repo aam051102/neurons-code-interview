@@ -11,29 +11,40 @@ const Nav = () => {
 
     return (
         <>
-            <nav className="fixed top-0 left-0 w-full bg-white shadow-md flex-shrink-0">
+            <nav className="fixed top-0 left-0 w-full bg-white shadow-sm flex-shrink-0">
                 <div className="custom_container h-16 flex items-stretch justify-start">
                     <Link
-                        href="/survivors"
+                        href="/"
                         className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
                     >
-                        All Survivors
+                        Change Survivor
                     </Link>
 
-                    <Link
-                        href={`/survivors/${currentUser?.id}`}
-                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
-                    >
-                        My Profile
-                    </Link>
+                    {currentUser ? (
+                        <>
+                            <Link
+                                href="/survivors"
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                            >
+                                All Survivors
+                            </Link>
 
-                    <button
-                        type="button"
-                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
-                        onClick={() => setIsLocationModalOpen(true)}
-                    >
-                        Update Location
-                    </button>
+                            <Link
+                                href={`/survivors/${currentUser?.id}`}
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                            >
+                                My Profile
+                            </Link>
+
+                            <button
+                                type="button"
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                                onClick={() => setIsLocationModalOpen(true)}
+                            >
+                                Update Location
+                            </button>
+                        </>
+                    ) : null}
                 </div>
             </nav>
 
