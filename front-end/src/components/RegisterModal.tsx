@@ -183,7 +183,7 @@ const RegisterModal = ({
                     <div className="flex gap-5">
                         <button
                             type="submit"
-                            className="button_std"
+                            className="button_std button_std_positive"
                             disabled={isLoading}
                         >
                             {isLoading ? "Loading..." : "Register"}

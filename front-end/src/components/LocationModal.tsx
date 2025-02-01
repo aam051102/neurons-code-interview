@@ -63,7 +63,7 @@ const LocationModal = ({
             className="modal_std"
         >
             <div className="modal_std_inner">
-                <p className="mb-5">Update location?</p>
+                <h2 className="mb-5 font-black text-lg">Update Location</h2>
 
                 <form onSubmit={onSubmit}>
                     <div className="flex flex-col gap-2.5 mb-10">

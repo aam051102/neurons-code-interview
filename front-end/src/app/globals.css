@@ -12,15 +12,15 @@ body {
 }
 
 .button_std {
-  @apply inline-block py-1.5 px-2.5 bg-gray-200 hover:bg-gray-400 font-normal rounded-sm;
+  @apply inline-block py-1.5 px-2.5 bg-transparent border-2 text-gray-700 border-gray-700 hover:bg-gray-700 hover:text-white rounded-sm font-bold;
 }
 
 .button_std_danger {
-  @apply bg-transparent border-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white;
+  @apply bg-transparent border-red-600 hover:border-red-800 bg-red-600 hover:bg-red-800 text-white;
 }
 
 .button_std_positive {
-  @apply bg-green-600 border-0 text-white hover:bg-green-800;
+  @apply bg-green-600 border-green-600 hover:border-green-800 text-white hover:bg-green-800;
 }
 
 .button_std_positive:disabled {
