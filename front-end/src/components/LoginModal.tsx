@@ -1,14 +1,15 @@
-"use client";
-
 import { CurrentUserContext } from "@/context";
-import { useRouter } from "next/navigation";
 import { FormEventHandler, useContext, useState } from "react";
 
-export default function Home() {
+export default function LoginModal({
+    isOpen,
+    setIsOpen,
+}: {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+}) {
     const currentUserCtx = useContext(CurrentUserContext);
     const setCurrentUser = currentUserCtx?.setCurrentUser;
-
-    const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -44,7 +45,7 @@ export default function Home() {
                 });
                 localStorage.setItem("userID", data.id.toString()); // Using localStorage rather than cookies because it's faster to use without libraries.
                 setIsLoading(false);
-                router.push("/survivors");
+                setIsOpen(false);
             })
             .catch(() => {
                 alert("Something went wrong. User could not be found!");
@@ -52,16 +53,18 @@ export default function Home() {
             });
     };
 
-    return (
-        <div className="min-h-screen py-20 custom_container flex items-center justify-center">
-            <div className="max-w-lg w-full">
-                <h1 className="text-3xl font-black uppercase mb-2.5 mt-5">
-                    Enter Survivor ID
-                </h1>
+    return isOpen ? (
+        <dialog
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            className="modal_std"
+        >
+            <div className="modal_std_inner">
+                <h2 className="mb-2.5 font-black text-lg">Login</h2>
 
                 {/* In a real application, this would be a login page. For the purposes of this task, it is a simple ID entry, which directly "signs you in" to the survior in question. */}
                 <form onSubmit={onSubmit}>
-                    <div className="mb-5">
+                    <div className="mb-10">
                         <label htmlFor="login_id">Survivor ID</label>
 
                         <input
@@ -73,15 +76,25 @@ export default function Home() {
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="button_std"
-                        disabled={isLoading}
-                    >
-                        Login
-                    </button>
+                    <div className="flex gap-5">
+                        <button
+                            type="submit"
+                            className="button_std button_std_positive"
+                            disabled={isLoading}
+                        >
+                            Login
+                        </button>
+
+                        <button
+                            type="button"
+                            className="button_std"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
-        </div>
-    );
+        </dialog>
+    ) : null;
 }

@@ -20,7 +20,7 @@ def createSurvivor(request):
         
         # Create inventory
         # NOTE: This is not the safest way of doing things, since the inventory could theoretically fail to be created, causing the endpoint to throw an error, while the user remains in the DB.
-        # Also, I don't have enough experience to know what best practice is with Django, but I doubt this is the easiest way to create relations.
+        # I don't have enough experience to know what best practice is with Django, but I doubt this is the easiest way to create relations.
         inventory = request.data.get("inventory")
 
         if inventory and len(inventory) > 0:

@@ -16,7 +16,9 @@ This opens the server on localhost:8000.
 - `npm install`
 - `npm run dev`
 
-This opens the site on localhost:3000. Both the front-end and the back-end must be running for the application to function.
+This opens the site on localhost:3000. Both the front-end and the back-end must be running for the application to function. The application will then be accessible at `localhost:3000/survivors`
+
+To use the application to its fullest, you will need a survivor ID. Register yourself as a survivor by going to `localhost:3000/survivors`, pressing "Register Survivor" and filling in the form. You will be provided with an ID, which can be entered by pressing the "Login" button in the navigation bar.
 
 # Tests
 ## Back-end

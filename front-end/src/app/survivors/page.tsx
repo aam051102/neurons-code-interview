@@ -122,7 +122,8 @@ export default function Survivors() {
                                                 className="block w-0 h-11 flex-grow"
                                             ></a>
 
-                                            {survivor.id !== currentUser?.id &&
+                                            {currentUser &&
+                                            survivor.id !== currentUser?.id &&
                                             survivor.receivedReports.length <
                                                 MAX_REPORTS_FOR_INFECTION ? (
                                                 <div className="hidden justify-end  sm:flex gap-2.5 invisible group-hover:visible pr-5">

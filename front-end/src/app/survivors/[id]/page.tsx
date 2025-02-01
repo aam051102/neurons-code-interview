@@ -54,7 +54,7 @@ export default function Survivor() {
                             You
                         </div>
                     ) : survivor.receivedReports.length >=
-                      MAX_REPORTS_FOR_INFECTION ? null : (
+                          MAX_REPORTS_FOR_INFECTION || !currentUser ? null : (
                         <div className="flex gap-2.5">
                             <button
                                 type="button"

@@ -62,10 +62,13 @@ const RegisterModal = ({
         })
             .then(async (res) => {
                 if (res.status >= 400) throw new Error();
+                const data = await res.json();
+
                 await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
-                alert("Registration successful!");
+
+                alert(`Registration successful! Your ID is ${data.id}.`);
             })
             .catch(() => {
                 alert("Error! Registration failed. Please try again later.");
