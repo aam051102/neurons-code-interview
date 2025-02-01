@@ -65,7 +65,8 @@ export default function Survivors() {
                                 <th className="text-left td_width-hug">
                                     Status
                                 </th>
-                                <th className="text-right td_width-auto"></th>
+                                <th className="td_width-auto"></th>
+                                <th className="text-right td_width-hug"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,12 +103,13 @@ export default function Survivors() {
                                             </span>
                                         )}
                                     </td>
-                                    <td className="td_width-auto">
+                                    <td className="td_width-auto"></td>
+                                    <td className="td_width-hug">
                                         <div className="flex gap-2.5 justify-end invisible group-hover:visible">
                                             {survivor.id !== currentUser?.id &&
                                             survivor.receivedReports.length <
                                                 MAX_REPORTS_FOR_INFECTION ? (
-                                                <>
+                                                <div className="hidden sm:flex gap-2.5">
                                                     <button
                                                         type="button"
                                                         className="button_std"
@@ -131,7 +133,7 @@ export default function Survivors() {
                                                     >
                                                         Trade
                                                     </button>
-                                                </>
+                                                </div>
                                             ) : null}
 
                                             <Link

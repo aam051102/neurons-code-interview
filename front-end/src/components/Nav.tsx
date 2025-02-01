@@ -15,33 +15,33 @@ const Nav = () => {
                 <div className="custom_container h-16 flex items-stretch justify-start">
                     <Link
                         href="/"
-                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
                     >
-                        Change Survivor
+                        Login
                     </Link>
 
                     {currentUser ? (
                         <>
                             <Link
                                 href="/survivors"
-                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
                             >
-                                All Survivors
+                                Overview
                             </Link>
 
                             <Link
                                 href={`/survivors/${currentUser?.id}`}
-                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
                             >
-                                My Profile
+                                Profile
                             </Link>
 
                             <button
                                 type="button"
-                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-5"
+                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
                                 onClick={() => setIsLocationModalOpen(true)}
                             >
-                                Update Location
+                                Relocate
                             </button>
                         </>
                     ) : null}
