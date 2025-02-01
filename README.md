@@ -16,4 +16,4 @@ Then go to localhost:3000/survivors
 
 ## Front-end
 `cd front-end`
-`npm run test`
+`npm run cypress:open`
