@@ -107,8 +107,13 @@ export default function Survivors() {
 
                                     <td className="td_width-hug td_link">
                                         <a href={`/survivors/${survivor.id}`}>
-                                            {survivor.longitude},{" "}
-                                            {survivor.latitude}
+                                            {Number(survivor.longitude).toFixed(
+                                                6
+                                            )}
+                                            ,{" "}
+                                            {Number(survivor.latitude).toFixed(
+                                                6
+                                            )}
                                         </a>
                                     </td>
 

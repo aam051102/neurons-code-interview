@@ -99,7 +99,8 @@ export default function Survivor() {
                     </p>
                     <p>
                         <span className="font-bold">Last Location:</span>{" "}
-                        {survivor.latitude}, {survivor.longitude}
+                        {Number(survivor.latitude).toFixed(6)},{" "}
+                        {Number(survivor.longitude).toFixed(6)}
                     </p>
                     <p>
                         <span className="font-bold">Status:</span>{" "}
