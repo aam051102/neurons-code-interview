@@ -51,46 +51,36 @@ const ReportModal = ({
 
     return (
         <>
-            {isOpen && survivor ? (
-                <dialog
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    className="modal_std"
-                >
-                    <div className="modal_std_inner">
-                        <h2 className="mb-2.5 font-black text-lg">
-                            Report Infection
-                        </h2>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                <h2 className="mb-2.5 font-black text-lg">Report Infection</h2>
 
-                        <p className="mb-5">
-                            Are you sure you want to report an infection for{" "}
-                            {survivor.name}?
-                        </p>
+                <p className="mb-5">
+                    Are you sure you want to report an infection for{" "}
+                    {survivor?.name}?
+                </p>
 
-                        <div className="flex gap-5">
-                            <button
-                                type="button"
-                                className="button_std button_std_danger"
-                                onClick={onSubmit}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? "Loading..." : "Report"}
-                            </button>
+                <div className="flex gap-5">
+                    <button
+                        type="button"
+                        className="button_std button_std_danger"
+                        onClick={onSubmit}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Loading..." : "Report"}
+                    </button>
 
-                            <button
-                                type="button"
-                                className="button_std"
-                                onClick={() => {
-                                    setIsOpen(false);
-                                }}
-                                disabled={isLoading}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </dialog>
-            ) : null}
+                    <button
+                        type="button"
+                        className="button_std"
+                        onClick={() => {
+                            setIsOpen(false);
+                        }}
+                        disabled={isLoading}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </Modal>
 
             <Modal
                 isOpen={!!subModalChildren}

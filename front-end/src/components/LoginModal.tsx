@@ -62,50 +62,42 @@ export default function LoginModal({
 
     return (
         <>
-            {isOpen ? (
-                <dialog
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    className="modal_std"
-                >
-                    <div className="modal_std_inner">
-                        <h2 className="mb-2.5 font-black text-lg">Login</h2>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                <h2 className="mb-2.5 font-black text-lg">Login</h2>
 
-                        {/* In a real application, this would be a login page. For the purposes of this task, it is a simple ID entry, which directly "signs you in" to the survior in question. */}
-                        <form onSubmit={onSubmit}>
-                            <div className="mb-10">
-                                <label htmlFor="login_id">Survivor ID</label>
+                {/* In a real application, this would be a login page. For the purposes of this task, it is a simple ID entry, which directly "signs you in" to the survior in question. */}
+                <form onSubmit={onSubmit}>
+                    <div className="mb-10">
+                        <label htmlFor="login_id">Survivor ID</label>
 
-                                <input
-                                    type="text"
-                                    id={`login_id`}
-                                    name={`id`}
-                                    className="field_std"
-                                    required
-                                />
-                            </div>
-
-                            <div className="flex gap-5">
-                                <button
-                                    type="submit"
-                                    className="button_std button_std_positive"
-                                    disabled={isLoading}
-                                >
-                                    Login
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="button_std"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                        <input
+                            type="text"
+                            id={`login_id`}
+                            name={`id`}
+                            className="field_std"
+                            required
+                        />
                     </div>
-                </dialog>
-            ) : null}
+
+                    <div className="flex gap-5">
+                        <button
+                            type="submit"
+                            className="button_std button_std_positive"
+                            disabled={isLoading}
+                        >
+                            Login
+                        </button>
+
+                        <button
+                            type="button"
+                            className="button_std"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </Modal>
 
             <Modal
                 isOpen={!!subModalChildren}

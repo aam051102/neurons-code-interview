@@ -85,146 +85,130 @@ const RegisterModal = ({
 
     return (
         <>
-            {isOpen ? (
-                <dialog
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    className="modal_std"
-                >
-                    <div className="modal_std_inner">
-                        <h2 className="mb-5 font-black text-lg">
-                            Register Survivor
-                        </h2>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                <h2 className="mb-5 font-black text-lg">Register Survivor</h2>
 
-                        <form onSubmit={onSubmit}>
-                            <div className="flex gap-2.5 flex-col mb-10">
-                                <div>
-                                    <label htmlFor="register_name">Name</label>
-                                    <input
-                                        type="text"
-                                        id="register_name"
-                                        name="name"
-                                        className="field_std"
-                                        placeholder="John Doe Smith"
-                                        required
-                                    />
-                                </div>
+                <form onSubmit={onSubmit}>
+                    <div className="flex gap-2.5 flex-col mb-10">
+                        <div>
+                            <label htmlFor="register_name">Name</label>
+                            <input
+                                type="text"
+                                id="register_name"
+                                name="name"
+                                className="field_std"
+                                placeholder="John Doe Smith"
+                                required
+                            />
+                        </div>
 
-                                <div>
-                                    <label htmlFor="register_age">Age</label>
-                                    <input
-                                        type="number"
-                                        id="register_age"
-                                        name="age"
-                                        className="field_std"
-                                        min={0}
-                                        max={200}
-                                        required
-                                    />
-                                </div>
+                        <div>
+                            <label htmlFor="register_age">Age</label>
+                            <input
+                                type="number"
+                                id="register_age"
+                                name="age"
+                                className="field_std"
+                                min={0}
+                                max={200}
+                                required
+                            />
+                        </div>
 
-                                <div>
-                                    <label htmlFor="register_gender">
-                                        Gender
-                                    </label>
-                                    <select
-                                        name="gender"
-                                        id="register_gender"
-                                        className="field_std"
-                                        defaultValue={"0"}
-                                        required
-                                    >
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
-                                    </select>
-                                </div>
+                        <div>
+                            <label htmlFor="register_gender">Gender</label>
+                            <select
+                                name="gender"
+                                id="register_gender"
+                                className="field_std"
+                                defaultValue={"0"}
+                                required
+                            >
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
 
-                                <div>
-                                    <label htmlFor="register_latitude">
-                                        Latitude
-                                    </label>
-                                    <input
-                                        type="string"
-                                        id="register_latitude"
-                                        name="latitude"
-                                        className="field_std"
-                                        placeholder="0.000000"
-                                        pattern={LATITUDE_PATTERN}
-                                        required
-                                    />
-                                </div>
+                        <div>
+                            <label htmlFor="register_latitude">Latitude</label>
+                            <input
+                                type="string"
+                                id="register_latitude"
+                                name="latitude"
+                                className="field_std"
+                                placeholder="0.000000"
+                                pattern={LATITUDE_PATTERN}
+                                required
+                            />
+                        </div>
 
-                                <div>
-                                    <label htmlFor="register_longitude">
-                                        Longitude
-                                    </label>
-                                    <input
-                                        type="string"
-                                        id="register_longitude"
-                                        name="longitude"
-                                        className="field_std"
-                                        placeholder="0.000000"
-                                        pattern={LONGITUDE_PATTERN}
-                                        required
-                                    />
-                                </div>
+                        <div>
+                            <label htmlFor="register_longitude">
+                                Longitude
+                            </label>
+                            <input
+                                type="string"
+                                id="register_longitude"
+                                name="longitude"
+                                className="field_std"
+                                placeholder="0.000000"
+                                pattern={LONGITUDE_PATTERN}
+                                required
+                            />
+                        </div>
 
-                                <div>
-                                    <p className="mb-2.5 mt-5 font-bold">
-                                        Inventory:
-                                    </p>
+                        <div>
+                            <p className="mb-2.5 mt-5 font-bold">Inventory:</p>
 
-                                    <div className="grid gap-x-5 gap-y-2.5 grid-cols-2">
-                                        {/* Listing out all possible inventory items like this is not ideal, but it's the fastest solution, and it works for the limited amount of potential item types. */}
-                                        {Object.entries(ITEM_DATA_MAP).map(
-                                            ([key, item]) => (
-                                                <React.Fragment key={key}>
-                                                    <label
-                                                        htmlFor={`register_inventory_${key}`}
-                                                        className="col-span-1"
-                                                    >
-                                                        {item.name}
-                                                    </label>
-                                                    <input
-                                                        type="number"
-                                                        id={`register_inventory_${key}`}
-                                                        name={`inventory_${key}`}
-                                                        min={0}
-                                                        className="field_std field_std_small text-right col-span-1"
-                                                        defaultValue={0}
-                                                        required
-                                                    />
-                                                </React.Fragment>
-                                            )
-                                        )}
-                                    </div>
-                                </div>
+                            <div className="grid gap-x-5 gap-y-2.5 grid-cols-2">
+                                {/* Listing out all possible inventory items like this is not ideal, but it's the fastest solution, and it works for the limited amount of potential item types. */}
+                                {Object.entries(ITEM_DATA_MAP).map(
+                                    ([key, item]) => (
+                                        <React.Fragment key={key}>
+                                            <label
+                                                htmlFor={`register_inventory_${key}`}
+                                                className="col-span-1"
+                                            >
+                                                {item.name}
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id={`register_inventory_${key}`}
+                                                name={`inventory_${key}`}
+                                                min={0}
+                                                className="field_std field_std_small text-right col-span-1"
+                                                defaultValue={0}
+                                                required
+                                            />
+                                        </React.Fragment>
+                                    )
+                                )}
                             </div>
-
-                            <div className="flex gap-5">
-                                <button
-                                    type="submit"
-                                    className="button_std button_std_positive"
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? "Loading..." : "Register"}
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="button_std"
-                                    onClick={() => {
-                                        setIsOpen(false);
-                                    }}
-                                    disabled={isLoading}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </dialog>
-            ) : null}
+
+                    <div className="flex gap-5">
+                        <button
+                            type="submit"
+                            className="button_std button_std_positive"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Loading..." : "Register"}
+                        </button>
+
+                        <button
+                            type="button"
+                            className="button_std"
+                            onClick={() => {
+                                setIsOpen(false);
+                            }}
+                            disabled={isLoading}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </Modal>
 
             <Modal
                 isOpen={!!subModalChildren}

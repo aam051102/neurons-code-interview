@@ -66,76 +66,62 @@ const LocationModal = ({
 
     return (
         <>
-            {isOpen ? (
-                <dialog
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    className="modal_std"
-                >
-                    <div className="modal_std_inner">
-                        <h2 className="mb-5 font-black text-lg">
-                            Update Location
-                        </h2>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                <h2 className="mb-5 font-black text-lg">Update Location</h2>
 
-                        <form onSubmit={onSubmit}>
-                            <div className="flex flex-col gap-2.5 mb-10">
-                                <div>
-                                    <label htmlFor="register_latitude">
-                                        Latitude
-                                    </label>
-                                    <input
-                                        type="string"
-                                        id="location_latitude"
-                                        name="latitude"
-                                        className="field_std"
-                                        placeholder="0.000000"
-                                        pattern={LATITUDE_PATTERN}
-                                        required
-                                    />
-                                </div>
+                <form onSubmit={onSubmit}>
+                    <div className="flex flex-col gap-2.5 mb-10">
+                        <div>
+                            <label htmlFor="register_latitude">Latitude</label>
+                            <input
+                                type="string"
+                                id="location_latitude"
+                                name="latitude"
+                                className="field_std"
+                                placeholder="0.000000"
+                                pattern={LATITUDE_PATTERN}
+                                required
+                            />
+                        </div>
 
-                                <div>
-                                    <label htmlFor="register_longitude">
-                                        Longitude
-                                    </label>
-                                    <input
-                                        type="string"
-                                        id="location_longitude"
-                                        name="longitude"
-                                        className="field_std"
-                                        placeholder="0.000000"
-                                        pattern={LONGITUDE_PATTERN}
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex gap-5">
-                                <button
-                                    type="submit"
-                                    className="button_std button_std_positive"
-                                    disabled={isLoading}
-                                >
-                                    {isLoading
-                                        ? "Loading..."
-                                        : "Update Location"}
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="button_std"
-                                    onClick={() => {
-                                        setIsOpen(false);
-                                    }}
-                                    disabled={isLoading}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                        <div>
+                            <label htmlFor="register_longitude">
+                                Longitude
+                            </label>
+                            <input
+                                type="string"
+                                id="location_longitude"
+                                name="longitude"
+                                className="field_std"
+                                placeholder="0.000000"
+                                pattern={LONGITUDE_PATTERN}
+                                required
+                            />
+                        </div>
                     </div>
-                </dialog>
-            ) : null}
+
+                    <div className="flex gap-5">
+                        <button
+                            type="submit"
+                            className="button_std button_std_positive"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Loading..." : "Update Location"}
+                        </button>
+
+                        <button
+                            type="button"
+                            className="button_std"
+                            onClick={() => {
+                                setIsOpen(false);
+                            }}
+                            disabled={isLoading}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </Modal>
 
             <Modal
                 isOpen={!!subModalChildren}

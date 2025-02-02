@@ -83,7 +83,11 @@ body {
 
 /* Modal */
 .modal_std {
-  @apply fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-0 md:p-5 z-10;
+  @apply fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden items-center justify-center p-0 md:p-5 z-10;
+}
+
+.modal_std[open] {
+  @apply flex
 }
 
 .modal_std_inner {
