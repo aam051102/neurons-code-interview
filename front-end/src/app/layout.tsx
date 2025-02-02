@@ -8,6 +8,8 @@ import Nav from "@/components/Nav";
 import { useCallback, useEffect, useState } from "react";
 import { CurrentUserContext } from "@/context";
 import { IUser } from "@/types/IUser";
+import AlertModal from "@/components/AlertModal";
+import useAlertModal from "@/hooks/useAlertModal";
 
 const notoSans = Noto_Sans({
     variable: "--font-noto-sans",
@@ -25,6 +27,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+    const [subModal, setSubModal] = useAlertModal();
 
     const refetchUser = useCallback(
         async (id?: number) => {
@@ -38,7 +41,11 @@ export default function RootLayout({
                 .then((res) => res.json())
                 .then((res) => {
                     if (!res) {
-                        alert("Something went wrong. User could not be found!");
+                        setSubModal({
+                            children:
+                                "Something went wrong. User could not be found!",
+                            isOpen: true,
+                        });
                         return;
                     }
 
@@ -46,9 +53,16 @@ export default function RootLayout({
                         id: actualId,
                         inventory: res.inventory,
                     });
+                })
+                .catch(() => {
+                    setSubModal({
+                        children:
+                            "Something went wrong. User could not be found!",
+                        isOpen: true,
+                    });
                 });
         },
-        [currentUser?.id]
+        [currentUser?.id, setSubModal]
     );
 
     useEffect(() => {
@@ -66,6 +80,8 @@ export default function RootLayout({
                     <Nav />
 
                     {children}
+
+                    <AlertModal subModal={subModal} setSubModal={setSubModal} />
                 </CurrentUserContext.Provider>
             </body>
         </html>

@@ -3,6 +3,8 @@ import { CurrentUserContext } from "@/context";
 //import { useRouter } from "next/navigation";
 import { FormEventHandler, useContext, useState } from "react";
 import Modal from "./Modal";
+import AlertModal from "./AlertModal";
+import useAlertModal from "@/hooks/useAlertModal";
 
 type ILocationForm = {
     latitude: string;
@@ -21,10 +23,7 @@ const LocationModal = ({
     //const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [subModal, setSubModal] = useState<{
-        children: React.ReactNode;
-        isOpen: boolean;
-    }>({ children: null, isOpen: false });
+    const [subModal, setSubModal] = useAlertModal();
 
     const onSubmit: FormEventHandler = (event) => {
         event.stopPropagation();
@@ -130,32 +129,7 @@ const LocationModal = ({
                 </form>
             </Modal>
 
-            <Modal
-                isOpen={subModal.isOpen}
-                onClose={() =>
-                    setSubModal((prevState) => ({
-                        ...prevState,
-                        isOpen: false,
-                    }))
-                }
-            >
-                {subModal.children}
-
-                <div className="mt-5">
-                    <button
-                        type="button"
-                        className="button_std"
-                        onClick={() =>
-                            setSubModal((prevState) => ({
-                                ...prevState,
-                                isOpen: false,
-                            }))
-                        }
-                    >
-                        Okay
-                    </button>
-                </div>
-            </Modal>
+            <AlertModal subModal={subModal} setSubModal={setSubModal} />
         </>
     );
 };

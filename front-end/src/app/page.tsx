@@ -1,9 +1,11 @@
 "use client";
+import AlertModal from "@/components/AlertModal";
 import RegisterModal from "@/components/RegisterModal";
 import ReportModal from "@/components/ReportModal";
 import TradeModal from "@/components/TradeModal";
 import { MAX_REPORTS_FOR_INFECTION } from "@/constants";
 import { CurrentUserContext } from "@/context";
+import useAlertModal from "@/hooks/useAlertModal";
 import { ISurvivor } from "@/types/ISurvivor";
 import { useCallback, useContext, useEffect, useState } from "react";
 
@@ -18,13 +20,21 @@ export default function Survivors() {
     const [trading, setTrading] = useState<ISurvivor | undefined>(undefined);
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
+    const [subModal, setSubModal] = useAlertModal();
+
     const refetch = useCallback(async () => {
         fetch(`http://localhost:8000/survivors/list?format=json`)
             .then((res) => res.json())
             .then((res) => {
                 setSurvivors(res);
+            })
+            .catch(() => {
+                setSubModal({
+                    children: "An error occurred! Failed to list survivors.",
+                    isOpen: true,
+                });
             });
-    }, []);
+    }, [setSubModal]);
 
     useEffect(() => {
         refetch();
@@ -185,6 +195,8 @@ export default function Survivors() {
                 setIsOpen={() => setIsRegistering(false)}
                 refetch={refetch}
             />
+
+            <AlertModal subModal={subModal} setSubModal={setSubModal} />
         </>
     );
 }

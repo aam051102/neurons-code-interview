@@ -2,6 +2,8 @@ import { CurrentUserContext } from "@/context";
 import { ISurvivor } from "@/types/ISurvivor";
 import { useContext, useState } from "react";
 import Modal from "./Modal";
+import AlertModal from "./AlertModal";
+import useAlertModal from "@/hooks/useAlertModal";
 
 const ReportModal = ({
     survivor,
@@ -18,10 +20,7 @@ const ReportModal = ({
     const currentUser = currentUserCtx?.currentUser;
 
     const [isLoading, setIsLoading] = useState(false);
-    const [subModal, setSubModal] = useState<{
-        children: React.ReactNode;
-        isOpen: boolean;
-    }>({ children: null, isOpen: false });
+    const [subModal, setSubModal] = useAlertModal();
 
     const onSubmit = () => {
         if (!survivor) return;
@@ -85,32 +84,7 @@ const ReportModal = ({
                 </div>
             </Modal>
 
-            <Modal
-                isOpen={subModal.isOpen}
-                onClose={() =>
-                    setSubModal((prevState) => ({
-                        ...prevState,
-                        isOpen: false,
-                    }))
-                }
-            >
-                {subModal.children}
-
-                <div className="mt-5">
-                    <button
-                        type="button"
-                        className="button_std"
-                        onClick={() =>
-                            setSubModal((prevState) => ({
-                                ...prevState,
-                                isOpen: false,
-                            }))
-                        }
-                    >
-                        Okay
-                    </button>
-                </div>
-            </Modal>
+            <AlertModal subModal={subModal} setSubModal={setSubModal} />
         </>
     );
 };

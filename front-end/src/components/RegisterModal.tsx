@@ -5,6 +5,8 @@ import {
 } from "@/constants";
 import React, { FormEventHandler, useState } from "react";
 import Modal from "./Modal";
+import AlertModal from "./AlertModal";
+import useAlertModal from "@/hooks/useAlertModal";
 
 type IRegisterForm = {
     name: string;
@@ -24,10 +26,7 @@ const RegisterModal = ({
     refetch: () => Promise<void>;
 }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [subModal, setSubModal] = useState<{
-        children: React.ReactNode;
-        isOpen: boolean;
-    }>({ children: null, isOpen: false });
+    const [subModal, setSubModal] = useAlertModal();
 
     const onSubmit: FormEventHandler = (event) => {
         event.stopPropagation();
@@ -214,32 +213,7 @@ const RegisterModal = ({
                 </form>
             </Modal>
 
-            <Modal
-                isOpen={subModal.isOpen}
-                onClose={() =>
-                    setSubModal((prevState) => ({
-                        ...prevState,
-                        isOpen: false,
-                    }))
-                }
-            >
-                {subModal.children}
-
-                <div className="mt-5">
-                    <button
-                        type="button"
-                        className="button_std"
-                        onClick={() =>
-                            setSubModal((prevState) => ({
-                                ...prevState,
-                                isOpen: false,
-                            }))
-                        }
-                    >
-                        Okay
-                    </button>
-                </div>
-            </Modal>
+            <AlertModal subModal={subModal} setSubModal={setSubModal} />
         </>
     );
 };
