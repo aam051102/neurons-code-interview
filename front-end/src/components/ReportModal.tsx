@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import Modal from "./Modal";
 import AlertModal from "./AlertModal";
 import useAlertModal from "@/hooks/useAlertModal";
+import useDelayedData from "@/hooks/useDelayedData";
 
 const ReportModal = ({
     survivor,
@@ -22,14 +23,20 @@ const ReportModal = ({
     const [isLoading, setIsLoading] = useState(false);
     const [subModal, setSubModal] = useAlertModal();
 
+    const savedSurvivor = useDelayedData({
+        isOpen,
+        data: survivor,
+        delay: 300,
+    });
+
     const onSubmit = () => {
-        if (!survivor) return;
+        if (!savedSurvivor) return;
 
         setIsLoading(true);
         fetch(`http://localhost:8000/survivors/report`, {
             method: "POST",
             body: JSON.stringify({
-                reported: survivor.id,
+                reported: savedSurvivor.id,
                 reporter: currentUser?.id,
             }),
             headers: {
@@ -58,7 +65,7 @@ const ReportModal = ({
 
                 <p className="mb-5">
                     Are you sure you want to report an infection for{" "}
-                    {survivor?.name}?
+                    {savedSurvivor?.name}?
                 </p>
 
                 <div className="flex gap-5">

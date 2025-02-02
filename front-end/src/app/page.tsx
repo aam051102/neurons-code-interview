@@ -55,7 +55,7 @@ export default function Survivors() {
                             setIsRegistering(true);
                         }}
                     >
-                        Register Survivor
+                        Register survivor
                     </button>
                 </div>
 
@@ -149,7 +149,7 @@ export default function Survivors() {
                                                 <div className="hidden justify-end  sm:flex gap-2.5 invisible group-hover:visible pr-5">
                                                     <button
                                                         type="button"
-                                                        className="button_std button_std_small"
+                                                        className="button_std button_std_small button_std_danger"
                                                         onClick={() => {
                                                             setReporting(
                                                                 survivor
