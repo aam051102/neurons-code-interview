@@ -13,8 +13,10 @@ export default function LoginModal({
     const setCurrentUser = currentUserCtx?.setCurrentUser;
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [subModalChildren, setSubModalChildren] =
-        useState<React.ReactNode>(null);
+    const [subModal, setSubModal] = useState<{
+        children: React.ReactNode;
+        isOpen: boolean;
+    }>({ children: null, isOpen: false });
 
     const onSubmit: FormEventHandler = async (event) => {
         if (!setCurrentUser) return;
@@ -37,9 +39,11 @@ export default function LoginModal({
             .then((res) => res.json())
             .then((res) => {
                 if (!res) {
-                    setSubModalChildren(
-                        "Something went wrong. User could not be found!"
-                    );
+                    setSubModal({
+                        children:
+                            "Something went wrong. User could not be found!",
+                        isOpen: true,
+                    });
                     setIsLoading(false);
                     return;
                 }
@@ -53,9 +57,10 @@ export default function LoginModal({
                 setIsOpen(false);
             })
             .catch(() => {
-                setSubModalChildren(
-                    "Something went wrong. User could not be found!"
-                );
+                setSubModal({
+                    children: "Something went wrong. User could not be found!",
+                    isOpen: true,
+                });
                 setIsLoading(false);
             });
     };
@@ -100,16 +105,26 @@ export default function LoginModal({
             </Modal>
 
             <Modal
-                isOpen={!!subModalChildren}
-                onClose={() => setSubModalChildren(null)}
+                isOpen={subModal.isOpen}
+                onClose={() =>
+                    setSubModal((prevState) => ({
+                        ...prevState,
+                        isOpen: false,
+                    }))
+                }
             >
-                {subModalChildren}
+                {subModal.children}
 
                 <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => setSubModalChildren(null)}
+                        onClick={() =>
+                            setSubModal((prevState) => ({
+                                ...prevState,
+                                isOpen: false,
+                            }))
+                        }
                     >
                         Okay
                     </button>

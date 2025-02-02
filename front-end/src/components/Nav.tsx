@@ -20,15 +20,12 @@ const Nav = () => {
                         onClick={() => {
                             setIsLoginModalOpen(true);
                         }}
-                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
+                        className="nav_item"
                     >
                         Login
                     </button>
 
-                    <Link
-                        href="/"
-                        className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
-                    >
+                    <Link href="/" className="nav_item">
                         Overview
                     </Link>
 
@@ -36,14 +33,14 @@ const Nav = () => {
                         <>
                             <Link
                                 href={`/survivors/${currentUser?.id}`}
-                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
+                                className="nav_item"
                             >
                                 Profile
                             </Link>
 
                             <button
                                 type="button"
-                                className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
+                                className="nav_item"
                                 onClick={() => setIsLocationModalOpen(true)}
                             >
                                 Relocate

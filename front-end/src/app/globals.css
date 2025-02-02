@@ -14,7 +14,7 @@ body {
 
 /* Button */
 .button_std {
-  @apply inline-block py-1.5 px-2.5 bg-transparent border text-black border-black hover:bg-black hover:text-white rounded-sm font-normal bg-white;
+  @apply inline-block py-1.5 px-2.5 bg-transparent border text-black border-black hover:bg-black hover:text-white rounded-sm font-normal bg-white transition-colors duration-100;
 }
 
 .button_std_danger {
@@ -50,6 +50,10 @@ body {
   @apply px-5 py-2.5;
 }
 
+.table_std td {
+  @apply transition-colors duration-100;
+}
+
 .table_std tr:nth-child(odd) td {
   @apply bg-gray-100
 }
@@ -83,15 +87,19 @@ body {
 
 /* Modal */
 .modal_std {
-  @apply fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden items-center justify-center p-0 md:p-5 z-10;
-}
-
-.modal_std[open] {
-  @apply flex
+  @apply fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex invisible items-center justify-center p-0 md:p-5 z-10 opacity-0 transition-all duration-300;
 }
 
 .modal_std_inner {
-  @apply bg-white md:rounded-md p-10 h-full overflow-auto w-full md:w-auto md:h-auto flex flex-col justify-center;
+  @apply bg-white md:rounded-md p-10 h-full overflow-auto w-full md:w-auto md:h-auto flex flex-col justify-center transition-all duration-300 translate-y-8;
+}
+
+.modal_std[open] {
+  @apply visible opacity-100;
+}
+
+.modal_std[open] .modal_std_inner {
+  @apply translate-y-0;
 }
 
 /* Input field */
@@ -109,4 +117,9 @@ body {
 
 .field_std:user-invalid::placeholder {
   @apply text-red-400
+}
+
+/* Navbar item */
+.nav_item {
+  @apply h-full flex items-center text-center justify-center transition-colors duration-100 hover:bg-blue-100 p-2.5 sm:p-5
 }

@@ -24,9 +24,10 @@ const RegisterModal = ({
     refetch: () => Promise<void>;
 }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const [subModalChildren, setSubModalChildren] =
-        useState<React.ReactNode>(null);
+    const [subModal, setSubModal] = useState<{
+        children: React.ReactNode;
+        isOpen: boolean;
+    }>({ children: null, isOpen: false });
 
     const onSubmit: FormEventHandler = (event) => {
         event.stopPropagation();
@@ -72,14 +73,17 @@ const RegisterModal = ({
                 setIsLoading(false);
                 setIsOpen(false);
 
-                setSubModalChildren(
-                    `Registration successful! Your ID is ${data.id}.`
-                );
+                setSubModal({
+                    children: `Registration successful! Your ID is ${data.id}.`,
+                    isOpen: true,
+                });
             })
             .catch(() => {
-                setSubModalChildren(
-                    "Error! Registration failed. Please try again later."
-                );
+                setSubModal({
+                    children:
+                        "Error! Registration failed. Please try again later.",
+                    isOpen: true,
+                });
             });
     };
 
@@ -211,16 +215,26 @@ const RegisterModal = ({
             </Modal>
 
             <Modal
-                isOpen={!!subModalChildren}
-                onClose={() => setSubModalChildren(null)}
+                isOpen={subModal.isOpen}
+                onClose={() =>
+                    setSubModal((prevState) => ({
+                        ...prevState,
+                        isOpen: false,
+                    }))
+                }
             >
-                {subModalChildren}
+                {subModal.children}
 
                 <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => setSubModalChildren(null)}
+                        onClick={() =>
+                            setSubModal((prevState) => ({
+                                ...prevState,
+                                isOpen: false,
+                            }))
+                        }
                     >
                         Okay
                     </button>

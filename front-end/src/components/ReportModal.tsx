@@ -18,8 +18,10 @@ const ReportModal = ({
     const currentUser = currentUserCtx?.currentUser;
 
     const [isLoading, setIsLoading] = useState(false);
-    const [subModalChildren, setSubModalChildren] =
-        useState<React.ReactNode>(null);
+    const [subModal, setSubModal] = useState<{
+        children: React.ReactNode;
+        isOpen: boolean;
+    }>({ children: null, isOpen: false });
 
     const onSubmit = () => {
         if (!survivor) return;
@@ -40,12 +42,13 @@ const ReportModal = ({
                 await refetch();
                 setIsLoading(false);
                 setIsOpen(false);
-                setSubModalChildren("Report successful!");
+                setSubModal({ children: "Report successful!", isOpen: true });
             })
             .catch(() => {
-                setSubModalChildren(
-                    "Error! Report failed. Please try again later."
-                );
+                setSubModal({
+                    children: "Error! Report failed. Please try again later.",
+                    isOpen: true,
+                });
             });
     };
 
@@ -83,16 +86,26 @@ const ReportModal = ({
             </Modal>
 
             <Modal
-                isOpen={!!subModalChildren}
-                onClose={() => setSubModalChildren(null)}
+                isOpen={subModal.isOpen}
+                onClose={() =>
+                    setSubModal((prevState) => ({
+                        ...prevState,
+                        isOpen: false,
+                    }))
+                }
             >
-                {subModalChildren}
+                {subModal.children}
 
                 <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => setSubModalChildren(null)}
+                        onClick={() =>
+                            setSubModal((prevState) => ({
+                                ...prevState,
+                                isOpen: false,
+                            }))
+                        }
                     >
                         Okay
                     </button>

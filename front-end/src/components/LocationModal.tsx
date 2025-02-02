@@ -21,8 +21,10 @@ const LocationModal = ({
     //const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [subModalChildren, setSubModalChildren] =
-        useState<React.ReactNode>(null);
+    const [subModal, setSubModal] = useState<{
+        children: React.ReactNode;
+        isOpen: boolean;
+    }>({ children: null, isOpen: false });
 
     const onSubmit: FormEventHandler = (event) => {
         event.stopPropagation();
@@ -50,7 +52,10 @@ const LocationModal = ({
                 if (res.status >= 400) throw new Error();
                 setIsLoading(false);
                 setIsOpen(false);
-                setSubModalChildren("Location change successful!");
+                setSubModal({
+                    children: "Location change successful!",
+                    isOpen: true,
+                });
 
                 // NOTE: This is not ideal, but it's the quickest way to make sure that the data on the page is updated to match the location change.
                 // Ideally, this should be a call to a refetch function of some sort.
@@ -58,9 +63,11 @@ const LocationModal = ({
                 // router.refresh();
             })
             .catch(() => {
-                setSubModalChildren(
-                    "Error! Location change failed. Please try again later."
-                );
+                setSubModal({
+                    children:
+                        "Error! Location change failed. Please try again later.",
+                    isOpen: true,
+                });
             });
     };
 
@@ -124,16 +131,26 @@ const LocationModal = ({
             </Modal>
 
             <Modal
-                isOpen={!!subModalChildren}
-                onClose={() => setSubModalChildren(null)}
+                isOpen={subModal.isOpen}
+                onClose={() =>
+                    setSubModal((prevState) => ({
+                        ...prevState,
+                        isOpen: false,
+                    }))
+                }
             >
-                {subModalChildren}
+                {subModal.children}
 
                 <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => setSubModalChildren(null)}
+                        onClick={() =>
+                            setSubModal((prevState) => ({
+                                ...prevState,
+                                isOpen: false,
+                            }))
+                        }
                     >
                         Okay
                     </button>

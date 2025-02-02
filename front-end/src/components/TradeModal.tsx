@@ -50,8 +50,10 @@ const TradeModal = ({
     }, [isOpen]);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [subModalChildren, setSubModalChildren] =
-        useState<React.ReactNode>(null);
+    const [subModal, setSubModal] = useState<{
+        children: React.ReactNode;
+        isOpen: boolean;
+    }>({ children: null, isOpen: false });
 
     const onSubmit: FormEventHandler = (event) => {
         event.stopPropagation();
@@ -104,12 +106,13 @@ const TradeModal = ({
 
                 setIsLoading(false);
                 setIsOpen(false);
-                setSubModalChildren("Trade successful!");
+                setSubModal({ children: "Trade successful!", isOpen: true });
             })
             .catch(() => {
-                setSubModalChildren(
-                    "Error! Trade failed. Please try again later."
-                );
+                setSubModal({
+                    children: "Error! Trade failed. Please try again later.",
+                    isOpen: true,
+                });
             });
     };
 
@@ -138,8 +141,8 @@ const TradeModal = ({
                 <form onSubmit={onSubmit}>
                     <div className="flex gap-10 mb-10 max-w-screen-md flex-col md:flex-row">
                         <div className="w-full">
-                            <h3 className="text-lg font-black mb-2.5 uppercase">
-                                Your inventory
+                            <h3 className="text-lg font-black capitalize mb-2.5">
+                                Your Inventory
                             </h3>
 
                             <div className="grid gap-x-5 gap-y-2.5 grid-cols-3">
@@ -215,8 +218,8 @@ const TradeModal = ({
                         <hr className="w-px bg-gray-200 border-0 h-auto flex-shrink-0 hidden md:block" />
 
                         <div className="w-full">
-                            <h3 className="text-lg font-black mb-2.5 uppercase md:text-right">
-                                {survivor?.name.split(" ")[0]}&apos;s inventory
+                            <h3 className="text-lg font-black mb-2.5 capitalize md:text-right">
+                                {survivor?.name.split(" ")[0]}&apos;s Inventory
                             </h3>
 
                             <div className="grid gap-x-5 gap-y-2.5 grid-cols-3">
@@ -334,16 +337,26 @@ const TradeModal = ({
             </Modal>
 
             <Modal
-                isOpen={!!subModalChildren}
-                onClose={() => setSubModalChildren(null)}
+                isOpen={subModal.isOpen}
+                onClose={() =>
+                    setSubModal((prevState) => ({
+                        ...prevState,
+                        isOpen: false,
+                    }))
+                }
             >
-                {subModalChildren}
+                {subModal.children}
 
                 <div className="mt-5">
                     <button
                         type="button"
                         className="button_std"
-                        onClick={() => setSubModalChildren(null)}
+                        onClick={() =>
+                            setSubModal((prevState) => ({
+                                ...prevState,
+                                isOpen: false,
+                            }))
+                        }
                     >
                         Okay
                     </button>
