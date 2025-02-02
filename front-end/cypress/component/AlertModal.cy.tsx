@@ -3,7 +3,7 @@ import useAlertModal from "@/hooks/useAlertModal";
 import { mount } from "cypress/react";
 import { useEffect } from "react";
 
-const CloseWrapper = () => {
+const StateWrapper = () => {
     const [subModal, setSubModal] = useAlertModal();
 
     useEffect(() => {
@@ -26,7 +26,7 @@ describe("<AlertModal />", () => {
     });
 
     it("opens and closes", () => {
-        mount(<CloseWrapper />);
+        mount(<StateWrapper />);
 
         cy.get("dialog").should("have.attr", "open");
 
