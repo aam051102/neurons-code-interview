@@ -26,7 +26,7 @@ const Nav = () => {
                     </button>
 
                     <Link
-                        href="/survivors"
+                        href="/"
                         className="h-full flex items-center text-center justify-center hover:bg-gray-200 p-2.5 sm:p-5"
                     >
                         Overview
