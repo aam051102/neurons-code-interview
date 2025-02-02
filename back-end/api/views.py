@@ -52,7 +52,8 @@ def updateSurvivor(request):
 
 @api_view(['GET'])
 def findSurvivor(request):  
-    item = Survivor.objects.get(id=int(request.GET.get("id", 0)))
+    print(request.query_params)
+    item = Survivor.objects.get(id=int(request.query_params.get("id", 0)))
     serializer = SurvivorSerializer(item)
     return Response(serializer.data)
 
